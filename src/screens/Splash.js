@@ -26,6 +26,7 @@ export default function Splash() {
                                 navigate('Auth');
                             } else {
                                 console.log(err.response.data, err.response.status);
+                                navigate('Auth');
                             }
                         }
                     })

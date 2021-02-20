@@ -111,7 +111,7 @@ export default function SearchBox(props) {
                             <TouchableOpacity onPress={locked ? onDeselect : onEndSearching}>
                                 <Icon
                                     name={'arrow-back'}
-                                    color={theme.textAccent}
+                                    color={theme.textSecondary}
                                     size={theme.scale(22)}
                                 />
                             </TouchableOpacity>
@@ -119,7 +119,7 @@ export default function SearchBox(props) {
                         : (
                             <Icon
                                 name={'search'}
-                                color={theme.textAccent}
+                                color={theme.textSecondary}
                                 size={theme.scale(22)}
                             />
                         )
@@ -128,12 +128,13 @@ export default function SearchBox(props) {
                 <Input
                     onSetRef={(ref) => { inputRef = ref }}
                     value={text}
-                    setValue={setText}
+                    onChange={setText}
                     placeholder={'Search for locations...'}
-                    placeholderColor={theme.textAccent}
-                    style={styles.searchText}
+                    placeholderColor={theme.textSecondary}
+                    containerStyle={styles.searchText}
                     onFocus={() => setSearching(true)}
                     onBlur={onEndSearching}
+                    borderNone={false}
                 />
                 {!locked && (
                     text !== ''
@@ -141,7 +142,7 @@ export default function SearchBox(props) {
                             <TouchableOpacity onPress={() => setText('')} style={{ flex: 0.1 }}>
                                 <Icon
                                     name={'close'}
-                                    color={theme.textAccent}
+                                    color={theme.textSecondary}
                                     size={theme.scale(22)}
                                 />
                             </TouchableOpacity>
@@ -150,7 +151,7 @@ export default function SearchBox(props) {
                             <TouchableOpacity onPress={() => navigate('FavoriteLocations')} style={{ flex: 0.1 }}>
                                 <Icon
                                     name={'star-border'}
-                                    color={theme.textAccent}
+                                    color={theme.textSecondary}
                                     size={theme.scale(22)}
                                 />
                             </TouchableOpacity>
@@ -175,7 +176,7 @@ export default function SearchBox(props) {
                                     >
                                         <Icon
                                             name={'arrow-up-left'}
-                                            color={theme.textAccent}
+                                            color={theme.textSecondary}
                                             size={theme.scale(22)}
                                             style={{ flex: 0.1 }}
                                         />
@@ -203,7 +204,7 @@ export default function SearchBox(props) {
                                     >
                                         <Icon
                                             name={'access-time'}
-                                            color={theme.textAccent}
+                                            color={theme.textSecondary}
                                             size={theme.scale(22)}
                                             style={{ flex: 0.1 }}
                                         />
@@ -250,20 +251,12 @@ function getStyles(theme) {
             paddingHorizontal: theme.scale(20),
             paddingVertical: theme.scale(10),
         },
-        searchText: [
-            theme.textStyle({
-                font: 'NunitoRegular',
-                color: 'textAccent',
-                size: 16,
-                align: 'left'
-            }),
-            {
-                flex: 0.9,
-            }
-        ],
+        searchText: {
+            flex: 0.9,
+        },
         searchBackground: [
             {
-                backgroundColor: theme.black,
+                backgroundColor: theme.background,
                 position: 'absolute',
                 top: 0,
                 zIndex: 1,
@@ -291,7 +284,7 @@ function getStyles(theme) {
         placeholder: [
             theme.textStyle({
                 font: 'NunitoRegular',
-                color: 'textSecondary',
+                color: 'textPrimary',
                 size: 14,
                 align: 'left'
             }),
@@ -302,7 +295,7 @@ function getStyles(theme) {
         secondaryPlaceholder: [
             theme.textStyle({
                 font: 'NunitoRegular',
-                color: 'textSecondary',
+                color: 'textPrimary',
                 size: 14,
                 align: 'center'
             }),

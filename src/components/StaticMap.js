@@ -102,7 +102,7 @@ export default function StaticMap(props) {
                 .then(res => {
                     if (res.status === 200) {
                         const { geometry, formatted_address, photos, name } = res.data.result;
-                        setPins([{ location: geometry.location, color: theme.textAccent }]);
+                        setPins([{ location: geometry.location, color: theme.textSecondary }]);
 
                         AsyncStorage.getItem('@favorites')
                             .then((favorites) => {
@@ -162,7 +162,7 @@ export default function StaticMap(props) {
                         <TouchableOpacity onPress={onUnlocked}>
                             <Icon
                                 name={'close'}
-                                color={theme.textAccent}
+                                color={theme.textSecondary}
                                 size={theme.scale(25)}
                                 style={styles.roundBtn}
                             />
@@ -171,7 +171,7 @@ export default function StaticMap(props) {
                         <TouchableOpacity onPress={() => onMoveToLocation(selectedPlace.location)}>
                             <Icon
                                 name={'map-marker-alt'}
-                                color={theme.textAccent}
+                                color={theme.textSecondary}
                                 size={theme.scale(22)}
                                 style={styles.roundBtn}
                             />
@@ -182,7 +182,7 @@ export default function StaticMap(props) {
                 <TouchableOpacity onPress={() => onMoveToCurrentLocation(false)}>
                     <Icon
                         name={'my-location'}
-                        color={theme.textAccent}
+                        color={theme.textSecondary}
                         size={theme.scale(25)}
                         style={styles.roundBtn}
                     />
@@ -193,7 +193,7 @@ export default function StaticMap(props) {
                         <TouchableOpacity onPress={() => setModal(true)}>
                             <Icon
                                 name={'layers-outline'}
-                                color={theme.textAccent}
+                                color={theme.textSecondary}
                                 size={theme.scale(25)}
                                 style={styles.roundBtn}
                             />
@@ -228,7 +228,7 @@ export default function StaticMap(props) {
                                     >
                                         <Icon
                                             name={selectedPlace.isFavorite ? 'star' : 'star-border'}
-                                            color={theme.textAccent}
+                                            color={theme.textSecondary}
                                             size={theme.scale(20)}
                                         />
                                     </TouchableOpacity>
@@ -267,7 +267,7 @@ function getStyles(theme) {
             height: theme.scale(45),
             width: theme.scale(45),
             padding: theme.scale(10),
-            backgroundColor: theme.rgba(theme.black, 0.8),
+            backgroundColor: theme.rgba(theme.grey, 0.8),
             borderRadius: 150/2,
         },
         modal: {

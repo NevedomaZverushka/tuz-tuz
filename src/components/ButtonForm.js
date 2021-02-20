@@ -23,7 +23,7 @@ export default function ButtonForm(props) {
 function getStyles(theme) {
   return {
     buttonView: {
-      backgroundColor: theme.textPrimary,
+      backgroundColor: theme.textPlaceholder,
       borderRadius: theme.scale(40),
       paddingHorizontal: theme.scale(55),
       paddingVertical: theme.scale(15)
@@ -32,7 +32,7 @@ function getStyles(theme) {
       size: 18,
       align: 'left',
       font: 'NunitoBold',
-      color: 'textPlaceholder',
+      color: 'background',
     }),
   };
 }

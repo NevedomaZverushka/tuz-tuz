@@ -15,9 +15,9 @@ export default function Auth() {
           justifyContent: 'center',
           marginBottom: theme.scale(25)
         }}>
-          <Icon size={theme.scale(55)} name={'lock'} color={theme.textPrimary} />
+          <Icon size={theme.scale(55)} name={'car'} color={theme.textPlaceholder} />
         </View>
-        <Text style={styles.appName}>SecureApp</Text>
+        <Text style={styles.appName}>Tuz-Tuz</Text>
         {isLogin ? <Login /> : <SignUp onSignedUp={() => setIsLogin(true)}/>}
         <TouchableOpacity onPress={() => setIsLogin(prev => !prev)}>
           <Text style={styles.buttonText}>
@@ -35,13 +35,13 @@ function getStyles(theme) {
       flex: 1,
       ...theme.rowAlignedCenterVertical,
       backgroundColor: theme.white,
-      paddingHorizontal: theme.scale(60)
+      paddingHorizontal: theme.scale(40)
     },
     appName: [
       theme.textStyle({
         size: 35,
         font: 'NunitoMedium',
-        color: 'textAccent'
+        color: 'background'
       }),
       {
         marginBottom: theme.scale(50)
@@ -51,7 +51,7 @@ function getStyles(theme) {
       theme.textStyle({
         size: 18,
         font: 'NunitoMedium',
-        color: 'textSecondary',
+        color: 'background',
         align: 'center'
       }),
       {

@@ -12,11 +12,12 @@ export default function Input(props) {
     secureTextEntry,
     label = '',
     containerStyle,
-    dark = true,
+    borderNone,
+      placeholderColor,
     ...other
   } = props;
   const theme = getTheme();
-  const styles = getStyles(theme, dark);
+  const styles = getStyles(theme, borderNone, placeholderColor);
   const [secureText, setSecureText] = React.useState(secureTextEntry || false);
   const rest = React.useMemo(() => {
     return {...other, secureTextEntry: secureText};
@@ -44,16 +45,14 @@ export default function Input(props) {
           value={value}
           onChangeText={onChange}
           placeholder={placeholder}
-          placeholderTextColor={
-            dark ? theme.textSecondary : theme.textPlaceholder
-          }
+          placeholderTextColor={placeholderColor || theme.grey}
         />
         {(rightIcon || secureTextEntry) && (
           <TouchableOpacity onPress={onRightIconPress}>
             <Icon
               name={iconName}
-              size={theme.scale(26)}
-              color={theme.textAccent}
+              size={theme.scale(18)}
+              color={theme.grey}
             />
           </TouchableOpacity>
         )}
@@ -62,35 +61,37 @@ export default function Input(props) {
   );
 };
 
-function getStyles(theme, mode) {
+function getStyles(theme, border, color) {
   return {
-    inputView: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      width: '100%',
-      borderWidth: theme.scale(3),
-      borderColor: mode ? theme.white : theme.textPrimary,
-      borderStyle: 'solid',
-      borderRadius: theme.scale(5),
-      backgroundColor: mode ? theme.textPrimary : theme.white,
-      paddingHorizontal: theme.scale(10),
-    },
+    inputView: [
+      {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+      },
+      border && {
+        borderWidth: theme.scale(3),
+        borderColor: theme.textPrimary,
+        borderStyle: 'solid',
+        borderRadius: theme.scale(5),
+        paddingHorizontal: theme.scale(10),
+      }
+    ],
     input: [
       theme.textStyle({
-        size: 18,
+        size: 14,
         align: 'left',
         font: 'NunitoMedium',
-        color: mode ? 'white' : 'textPrimary',
+        color: color || 'grey',
       }),
       {
         flex: 1,
-        textAlignVertical: 'top',
       }
     ],
     label: [
       theme.textStyle({
-        size: 18,
+        size: 14,
         align: 'left',
         font: 'NunitoMedium',
         color: 'textPlaceholder',
@@ -100,7 +101,7 @@ function getStyles(theme, mode) {
       }
     ],
     maxLength: theme.textStyle({
-      size: 18,
+      size: 14,
       align: 'left',
       font: 'NunitoMedium',
       color: 'textPlaceholder',
