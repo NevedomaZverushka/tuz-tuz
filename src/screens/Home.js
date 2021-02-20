@@ -6,7 +6,7 @@ import {setAction} from "../store";
 import {useDispatch} from "react-redux";
 import {getPlaceIdByCoordinated} from '../utils/Geolocation';
 import Toast from "react-native-simple-toast";
-import {Animated, Easing, View, Text} from "react-native";
+import {Animated, Easing, View, Text, TouchableOpacity} from "react-native";
 import {useSelector} from "react-redux";
 import {useNavigation} from "@react-navigation/native";
 
@@ -105,21 +105,28 @@ export default function Home() {
                 setPins={setPins}
             />
             <Popup visible={modal} style={styles.modal} onClose={() => setModal(false)}>
-                <Text>{selectedPlace.name}</Text>
+                <View style={[{ flex: 0.8 }, theme.rowAlignedCenterVertical]}>
+                    <Text style={styles.subtitle}>
+                        Address:
+                    </Text>
+                    <Text style={styles.title}>
+                        {selectedPlace.name}
+                    </Text>
+                </View>
                 <View style={{height: theme.scale(15)}}/>
                 <Button text={'Set as destination'}
-                        textColor={theme.black}
-                        onPress={onSetAsStart}
+                    textColor={theme.black}
+                    onPress={onSetAsStart}
                 />
                 <View style={{height: theme.scale(15)}}/>
                 <Button text={'Set as start position'}
-                        textColor={theme.black}
-                        onPress={onSetAsEnd}
+                    textColor={theme.black}
+                    onPress={onSetAsEnd}
                 />
                 <View style={{height: theme.scale(15)}}/>
                 <Button text={'Call taxi'}
-                        buttonColor={theme.textPlaceholder}
-                        onPress={onFinish}
+                    buttonColor={theme.textPlaceholder}
+                    onPress={onFinish}
                 />
             </Popup>
         </React.Fragment>
@@ -136,12 +143,24 @@ function getStyles(theme) {
             top: 0,
         },
         modal: {
-            height: theme.scale(265),
+            height: theme.scale(270),
             backgroundColor: theme.rgba(theme.grey, 0.8),
             borderTopLeftRadius: theme.scale(20),
             borderTopRightRadius: theme.scale(20),
             paddingTop: theme.scale(20),
             paddingHorizontal: theme.scale(20),
         },
+        title: theme.textStyle({
+            size: 18,
+            font: 'NunitoBold',
+            color: 'white',
+            align: 'center'
+        }),
+        subtitle: theme.textStyle({
+            size: 14,
+            font: 'NunitoMedium',
+            color: 'background',
+            align: 'center'
+        }),
     }
 }

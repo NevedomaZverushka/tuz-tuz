@@ -43,7 +43,7 @@ function AppRoot() {
                         {
                             timeout: 10000,
                             maximumAge: 15000,
-                            enableHighAccuracy: true
+                            enableHighAccuracy: false
                         });
                 }, 1000);
             };

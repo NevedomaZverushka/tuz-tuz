@@ -25,11 +25,7 @@ export default function Button(props) {
     >
       <Text
         style={[
-          theme.textStyle({
-            size: 18,
-            font: 'NunitoBold',
-            color: textColor,
-          }),
+          styles.text,
           { color: textColor}
         ]}
       >
@@ -47,5 +43,12 @@ function getStyles(theme) {
       paddingHorizontal: theme.scale(55),
       paddingVertical: theme.scale(15),
     },
+    text: [
+      theme.textStyle({
+        size: 14,
+        font: 'NunitoBold',
+      }),
+      { width: "100%" }
+    ]
   };
 }
