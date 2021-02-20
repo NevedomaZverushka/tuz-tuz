@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import getTheme from "../global/Style";
 import {useDispatch, useSelector} from "react-redux";
 import {Animated, Easing, ImageBackground, Text, TouchableOpacity, View} from "react-native";
@@ -27,7 +27,9 @@ export default function StaticMap(props) {
     const { mapRef, setPins, modal, setModal, onGoToLocation } = props;
 
     const [followUserMode, setFollowUserMode] = React.useState(true);
+
     const [voiceInputOn, setVoiceInput] = React.useState(false);
+    const voiceAnim = useRef(new Animated.Value(0.0)).current;
 
     const movingAnimation = React.useRef(new Animated.Value(60)).current;
 
@@ -200,14 +202,20 @@ export default function StaticMap(props) {
                         <View style={{ height: theme.scale(15) }} />
                     </React.Fragment>
                 )}
-                <TouchableOpacity onPress={() => setVoiceInput(!voiceInputOn)}>
-                    <Icon
-                        name={'microphone'}
-                        color={theme.textSecondary}
-                        size={theme.scale(25)}
-                        style={styles.roundBtn}
-                    />
-                </TouchableOpacity>
+                <Animated.View>
+                    <TouchableOpacity onPress={() => setVoiceInput(!voiceInputOn)}>
+                        <Icon
+                            name={'microphone'}
+                            color={theme.textSecondary}
+                            size={theme.scale(25)}
+                            style={[styles.roundBtn, {
+                                borderColor: theme.textSecondary,
+                                borderWidth: 4,
+                                opacity: voiceAnim
+                            }]}
+                        />
+                    </TouchableOpacity>
+                </Animated.View>
                 <View style={{ height: theme.scale(15) }} />
                 <TouchableOpacity onPress={() => onMoveToCurrentLocation(false)}>
                     <Icon
