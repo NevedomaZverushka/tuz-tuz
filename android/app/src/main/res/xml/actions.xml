@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<actions>
+    <action intentName="actions.intent.CREATE_TAXI_RESERVATION">
+        <fulfillment urlTemplate="tuztuz://taxi{?dropoffAddress,pickupLocation}"
+                     fulfillmentMode="actions.fulfillment.DEEPLINK">
+            <parameter-mapping
+                    intentParameter="taxiReservation.dropoffLocation.name"
+                    urlParameter="dropoffAddress"/>
+            <parameter-mapping
+                    intentParameter="taxiReservation.pickupLocation.name"
+                    urlParameter="pickupLocation"/>
+        </fulfillment>
+    </action>
+</actions>

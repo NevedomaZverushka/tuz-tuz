@@ -105,7 +105,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.arnavi"
+        applicationId "com.tuztuz"
         minSdkVersion 23
         targetSdkVersion 28
         multiDexEnabled true
@@ -122,15 +122,15 @@ android {
     }
     productFlavors {
         ar {
-            resValue 'string', 'app_name', 'Arnavi'
+            resValue 'string', 'app_name', 'TuzTuz'
             buildConfigField 'String', 'VR_PLATFORM', '"GVR"' //default to GVR
         }
         gvr {
-            resValue 'string', 'app_name', 'Arnavi'
+            resValue 'string', 'app_name', 'TuzTuz'
             buildConfigField 'String', 'VR_PLATFORM', '"GVR"'
         }
         ovr {
-            resValue 'string', 'app_name', 'Arnavi'
+            resValue 'string', 'app_name', 'TuzTuz'
             applicationIdSuffix '.ovr'
             buildConfigField 'String', 'VR_PLATFORM', '"OVR_MOBILE"'
         }

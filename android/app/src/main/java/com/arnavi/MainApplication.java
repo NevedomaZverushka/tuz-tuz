@@ -1,4 +1,4 @@
-package com.arnavi;
+package com.tuztuz;
 
 import android.app.Application;
 

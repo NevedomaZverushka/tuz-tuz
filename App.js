@@ -33,6 +33,7 @@ function AppRoot() {
                 if (locationWatch) {
                     clearInterval(locationWatch);
                 }
+                console.log('set watch');
                 locationWatch = setInterval(() => {
                     Geolocation.getCurrentPosition((info) => {
                             const {longitude, latitude} = info.coords;

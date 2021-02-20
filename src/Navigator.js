@@ -1,10 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {Linking, Platform} from 'react-native';
 import {NavigationContainer} from "@react-navigation/native";
 import FavoriteLocations from './screens/FavoriteLocations';
-import ARNavigator from "./screens/ARNavigator";
 import {createStackNavigator} from "@react-navigation/stack";
 import {useSelector} from "react-redux";
-
 
 import Auth from './screens/Auth';
 import Home from './screens/Home';
@@ -13,11 +12,41 @@ import CreateNote from './screens/CreateNote';
 import NoteView from './screens/NoteView';
 import Verification from './screens/Verification';
 import Splash from "./screens/Splash";
+import ARNavigator from "./screens/ARNavigator";
 
 const Stack = createStackNavigator();
 
 export default function Navigator() {
-    const status = useSelector(state => state.appReady);
+
+    // useEffect(() => {
+    //     Linking.getInitialURL().then(url => {
+    //         navigateHandler(url);
+    //     });
+    //     if (Platform.OS === 'ios') {
+    //         Linking.addEventListener('url', handleOpenURL);
+    //     }
+    //     return () => {
+    //         if (Platform.OS === 'ios') {
+    //             Linking.removeEventListener('url', handleOpenURL);
+    //         }
+    //     };
+    // }, []);
+    //
+    // const handleOpenURL = (event) => {
+    //     navigateHandler(event.url);
+    // };
+    //
+    // const navigateHandler = async (url) => {
+    //     if (url) {
+    //         //const { navigate } = navigation;
+    //         const route = url.replace(/.*?:\/\//g, '');
+    //         const id = route.match(/\/([^\/]+)\/?$/)[1];
+    //         // const post = posts.find(item => item.id == id);
+    //         // navigate('Post', { post: post });
+    //     }
+    //     console.log('URL', url);
+    // };
+
     return (
         <NavigationContainer>
             <Stack.Navigator

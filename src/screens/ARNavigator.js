@@ -9,7 +9,7 @@ import {
     ViroMaterials,
 } from 'react-viro';
 import {Button, Icon, MapContainer, NavigatorScene, Popup} from "../components";
-import { connect } from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 
 import {bearing, calcCrow, rotatePoint} from "../utils/Coordinates";
 import {ARWaypointMarker} from "../components";
@@ -20,26 +20,6 @@ import {cleanAction} from "../store";
 
 class ARNavigator extends Component {
 
-    // waypoints = [
-    //     // {lat: 47.908953076075925, lng: 33.34762378333839},
-    //     // {lat: 47.908922470775664, lng: 33.34786382274828},
-    //
-    //     {lat: 47.90897674964831, lng: 33.34755424400486},
-    //     {lat: 47.90906525721537, lng: 33.34727387825782},
-    //     {lat: 47.909021437650324, lng: 33.347008480603726},
-    //     {lat: 47.908843819726656, lng: 33.34691889326},
-    //     {lat: 47.908806730985496, lng: 33.34701310991839},
-    //     {lat: 47.90879164149896, lng: 33.347184934469375},
-    //     {lat: 47.908774972195374, lng: 33.34752180137761},
-    //
-    //     // {lat: 47.89546, lng: 33.33501},
-    //     // {lat: 47.89608, lng: 33.33476},
-    //     // {lat: 47.8957, lng: 33.32971},
-    //     // {lat: 47.89606, lng: 33.33095},
-    //     // {lat: 47.89482, lng: 33.3313},
-    //     // {lat: 47.89607, lng: 33.33287},
-    // ];
-
     constructor() {
         super();
 
@@ -48,8 +28,6 @@ class ARNavigator extends Component {
         this.headingOnTrackingLost = 0;
         this.headingAfterTrackingLost = 0;
         this.state = {
-            waypointIdx: 0,
-            startPosition: true, // Switch between start and end position of waypoints
             heading: 0,
             initialHeading: null,
             initialPosition: null,
@@ -87,8 +65,6 @@ class ARNavigator extends Component {
 
         if (prevProps.userLocation !== userLocation)
         {
-            this.checkIfNextWaypoint();
-
             if (initialPosition === null) {
                 this.setState({initialPosition: userLocation});
             }
@@ -134,7 +110,7 @@ class ARNavigator extends Component {
         this.backHandler.remove();
     }
 
-    drawWaypoint = (waypointLocation, key) => {
+    drawWaypoint = (waypointLocation) => {
         const {initialHeading, initialPosition, trackingHeadingFix} = this.state;
 
         //-console.log(initialHeading, !!initialPosition)
@@ -158,46 +134,12 @@ class ARNavigator extends Component {
 
             const scale = [multiplier, multiplier, multiplier];
 
-            return <ARWaypointMarker point={point} key={key} scale={scale}/>;
+            return <ARWaypointMarker point={point} scale={scale}/>;
         }
         return null;
     };
 
-
-    onNextWaypoint = () => {
-        //console.log('new waypoint idx:', this.state.waypointIdx+1);
-        const {waypointIdx, startPosition} = this.state;
-
-        this.setState({
-            waypointIdx: waypointIdx + !startPosition,
-            startPosition: !startPosition
-        });
-
-        Vibration.vibrate([0, 150, 20, 150]);
-    };
-
-    checkIfNextWaypoint = () => {
-        const {userLocation, directions} = this.props;
-        const {waypointIdx, startPosition} = this.state;
-
-        let waypoint = directions[waypointIdx];
-        if (waypoint) {
-            if (startPosition) {
-                waypoint = waypoint.start_location;
-            } else {
-                waypoint = waypoint.end_location;
-            }
-        }
-        if (waypoint) {
-            const distance = calcCrow(
-                userLocation.lat, userLocation.lng,
-                waypoint.lat, waypoint.lng
-            );
-            if (distance < 5) {
-                this.onNextWaypoint();
-            }
-        }
-    };
+    //Vibration.vibrate([0, 150, 20, 150]);
 
     onClose = () => {
         Alert.alert("Hold on!", "Are you sure you want to go back?", [
@@ -222,21 +164,14 @@ class ARNavigator extends Component {
         const theme = getTheme();
         const styles = getStyles(theme);
         const {userLocation, directions, selectedPlace} = this.props;
-        const {waypointIdx, heading, startPosition, trackingGood, trackingInitialized} = this.state;
+        const {heading, trackingGood, trackingInitialized} = this.state;
 
-        let waypoint = directions[waypointIdx];
-        if (waypoint) {
-            if (startPosition) {
-                waypoint = waypoint.start_location;
-            } else {
-                waypoint = waypoint.end_location;
-            }
-        }
-        const isDone = !!!waypoint;
+        let waypoint = {lat: 47.90989468835377, lng: 33.39104752394221};
 
         let distance = 0;
         let angle = 0;
-        if (!isDone && waypoint) {
+
+        if (waypoint && userLocation.lat !== null) {
             distance = calcCrow(
                 userLocation.lat, userLocation.lng,
                 waypoint.lat, waypoint.lng
@@ -261,7 +196,7 @@ class ARNavigator extends Component {
             <View style={{flex: 1}}>
                 <ViroARSceneNavigator
                     viroAppProps={{
-                        waypoint: this.drawWaypoint(waypoint, waypointIdx),
+                        waypoint: this.drawWaypoint(waypoint),
                         updateInitialHeading: this.updateInitialHeading,
                         updateTrackingStatus: this.updateTrackingStatus,
                         onTrackingLost: this.onTrackingLost,
@@ -313,12 +248,9 @@ class ARNavigator extends Component {
                         style={styles.roundNextBtn}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.compassContainer}
-                                  onPress={() => this.props.navigation.navigate('Home')}
-                                  disabled={!isDone}
-                >
+                <View style={styles.compassContainer}>
                     <Icon
-                        name={isDone ? 'check' : 'navigation'}
+                        name={'navigation'}
                         color={theme.textAccent}
                         size={theme.scale(40)}
                         style={[styles.roundWaypointCompass, {
@@ -327,7 +259,7 @@ class ARNavigator extends Component {
                             ]}]
                         }
                     />
-                </TouchableOpacity>
+                </View>
                 <View
                     style={[
                         theme.rowAlignedCenterVertical,
@@ -350,11 +282,7 @@ class ARNavigator extends Component {
                         )
                     }
                 </View>
-                {!isDone && <TouchableOpacity onPress={() => this.onNextWaypoint()} style={styles.touchableNext}>
-                    <View style={styles.roundNextBtn}>
-                        <Text style={styles.primaryText}>Next</Text>
-                    </View>
-                </TouchableOpacity>}
+
                 <Popup visible={this.state.modal} style={styles.modal} onClose={() => this.setState({ modal: false })}>
                     <View style={theme.rowAlignedCenterVertical}>
                         <View style={styles.bar} />
@@ -401,7 +329,7 @@ const mapStateToProps = state => ({
     userLocation: state.userLocation,
     directions: state.directions,
     selectedPlace: state.selectedPlace,
-    bounds: state.bounds
+    bounds: state.bounds,
 });
 const mapDispatchToProps = dispatch => {
     return {
