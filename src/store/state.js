@@ -22,7 +22,7 @@ const initialState = {
   recentLocations: [],
   directions: [],
   bounds: [],
-
+  spinner: false,
   toast: {
     state: false,
     type: "",

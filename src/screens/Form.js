@@ -50,6 +50,7 @@ export default function Form() {
 
     return(
         <View style={styles.container}>
+            {}
             <Header
                 subtext={`Drive to`}
                 text={selectedPlace.name}

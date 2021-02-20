@@ -9,11 +9,11 @@ export default function Spinner(props) {
   const { background } = props;
   return(
     <View style={[styles.container, { backgroundColor: background || theme.white }]}>
-      {/*<LottieView*/}
-      {/*  autoPlay loop*/}
-      {/*  source={require('../assets/animations/spinner.json')}*/}
-      {/*  style={styles.spinner}*/}
-      {/*/>*/}
+      <LottieView
+        autoPlay loop
+        source={require('../assets/animations/spinner.json')}
+        style={styles.spinner}
+      />
     </View>
   );
 };
@@ -21,7 +21,9 @@ export default function Spinner(props) {
 function getStyles(theme) {
   return {
     container: {
-      flex: 1,
+      width: theme.fullWidth,
+      height: theme.fullHeight,
+      position: 'absolute',
       ...theme.rowAlignedCenterVertical,
       paddingHorizontal: theme.scale(50),
       paddingVertical: theme.scale(60)

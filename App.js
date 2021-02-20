@@ -1,7 +1,7 @@
 import React from 'react';
 import {StatusBar, PermissionsAndroid} from 'react-native';
 
-import {Provider, useDispatch} from 'react-redux';
+import {Provider, useDispatch, useSelector} from 'react-redux';
 import {store, setAction} from "./src/store";
 
 import UUIDGenerator from 'react-native-uuid-generator';
@@ -10,12 +10,13 @@ import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import Navigator from "./src/Navigator";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SplashScreen from 'react-native-splash-screen';
-import { ToastView } from './src/components';
+import {Spinner, ToastView} from './src/components';
 
 let locationWatch = null;
 
 function AppRoot() {
     const dispatch = useDispatch();
+    const spinner = useSelector(state => state.spinner);
 
     const configureLocation = async () => {
         // Request permission
@@ -100,6 +101,7 @@ function AppRoot() {
         <React.Fragment>
             <Navigator />
             <ToastView />
+            {spinner && <Spinner />}
         </React.Fragment>
 )
 }

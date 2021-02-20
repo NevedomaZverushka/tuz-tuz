@@ -101,6 +101,10 @@ export default function reducers(state = initialState, action) {
       const { endLocation } = initialState;
       return { ...state, endLocation };
     }
+    case "SET_SPINNER": {
+      const { payload } = action;
+      return { ...state, spinner: payload };
+    }
     default: return state;
   }
 };

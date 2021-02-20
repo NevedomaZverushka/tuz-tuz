@@ -8,11 +8,13 @@ import {getPlaceIdByCoordinated} from '../utils/Geolocation';
 import Toast from "react-native-simple-toast";
 import {Animated, Easing, View, Text} from "react-native";
 import {useSelector} from "react-redux";
+import {useNavigation} from "@react-navigation/native";
 
 export default function Home() {
     const theme = getTheme();
     const styles = getStyles(theme);
     const dispatch = useDispatch();
+    const {navigate} = useNavigation();
     const { selectedPlace } = useSelector(state => state);
 
     const [mapRef, setMapRef] = React.useState(null);
@@ -58,6 +60,11 @@ export default function Home() {
 
     const onSetAsEnd = React.useCallback(() => {
         dispatch(setAction('endLocation', selectedPlace));
+    }, [selectedPlace]);
+
+    const onFinish = React.useCallback(() => {
+        navigate('Form');
+        dispatch(setAction('spinner', true));
     }, [selectedPlace]);
 
     React.useEffect(() => {
@@ -109,6 +116,11 @@ export default function Home() {
                         textColor={theme.black}
                         onPress={onSetAsEnd}
                 />
+                <View style={{height: theme.scale(15)}}/>
+                <Button text={'Call taxi'}
+                        buttonColor={theme.textPlaceholder}
+                        onPress={onFinish}
+                />
             </Popup>
         </React.Fragment>
     )
@@ -124,7 +136,7 @@ function getStyles(theme) {
             top: 0,
         },
         modal: {
-            height: theme.scale(230),
+            height: theme.scale(265),
             backgroundColor: theme.rgba(theme.grey, 0.8),
             borderTopLeftRadius: theme.scale(20),
             borderTopRightRadius: theme.scale(20),

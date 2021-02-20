@@ -9,6 +9,7 @@ const SET_ACTIONS = {
   app: 'SET_APP_READY',
   directions: 'SET_DIRECTIONS',
   bounds: 'SET_BOUNDS',
+  spinner: 'SET_SPINNER',
 
   startLocation: 'SET_START_LOCATION',
   endLocation: 'SET_END_LOCATION'

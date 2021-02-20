@@ -3,7 +3,6 @@ import {NavigationContainer} from "@react-navigation/native";
 import FavoriteLocations from './screens/FavoriteLocations';
 import ARNavigator from "./screens/ARNavigator";
 import {createStackNavigator} from "@react-navigation/stack";
-import {useSelector} from "react-redux";
 
 
 import Auth from './screens/Auth';
@@ -15,7 +14,6 @@ import Form from "./screens/Form";
 const Stack = createStackNavigator();
 
 export default function Navigator() {
-    const status = useSelector(state => state.appReady);
     return (
         <NavigationContainer>
             <Stack.Navigator
