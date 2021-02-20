@@ -4,30 +4,36 @@ import getTheme from '../global/Style';
 import Icon from './Icon';
 
 export default function Header(props) {
-  const { rightIcon, onClickRightIcon } = props;
+  const { rightIcon, leftIcon, onClickRightIcon, onClickLeftIcon, text, subtext } = props;
   const theme = getTheme();
   const styles = getStyles(theme);
   return(
     <View style={styles.header}>
-      <View style={theme.rowAligned}>
+      <TouchableOpacity onPress={onClickLeftIcon} style={{ flex: 0.1 }}>
         <Icon
-          size={theme.scale(39)}
-          name={'lock'}
-          color={theme.textAccent}
-          style={{ marginRight: theme.scale(5) }}
-        />
-        <Text style={styles.title}>
-          SecureApp
-        </Text>
-      </View>
-      <TouchableOpacity onPress={onClickRightIcon}>
-        <Icon
-          size={theme.scale(25)}
-          name={rightIcon}
-          color={theme.white}
-          style={styles.icon}
+            size={theme.scale(28)}
+            name={leftIcon}
+            color={theme.textPrimary}
         />
       </TouchableOpacity>
+      <View style={[{ flex: 0.8 }, theme.rowAlignedCenterVertical]}>
+        <Text style={styles.subtitle}>
+          {subtext}
+        </Text>
+        <Text style={styles.title}>
+          {text}
+        </Text>
+      </View>
+      {rightIcon && (
+          <TouchableOpacity onPress={onClickRightIcon}>
+            <Icon
+                size={theme.scale(25)}
+                name={rightIcon}
+                color={theme.white}
+                style={styles.icon}
+            />
+          </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -35,16 +41,23 @@ export default function Header(props) {
 function getStyles(theme) {
   return {
     header: {
-      ...theme.rowAlignedBetween,
-      backgroundColor: theme.textPrimary,
-      paddingHorizontal: theme.scale(30),
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      paddingHorizontal: theme.scale(15),
       paddingVertical: theme.scale(15)
     },
     title: theme.textStyle({
       size: 18,
       font: 'NunitoBold',
-      color: 'white',
-      align: 'left'
+      color: 'textPrimary',
+      align: 'center'
+    }),
+    subtitle: theme.textStyle({
+      size: 14,
+      font: 'NunitoMedium',
+      color: 'background',
+      align: 'center'
     }),
     icon: {
       backgroundColor: theme.textPrimary,

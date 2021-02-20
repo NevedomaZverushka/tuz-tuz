@@ -12,7 +12,7 @@ export default function Input(props) {
     secureTextEntry,
     label = '',
     containerStyle,
-    borderNone,
+    borderNone = true,
       placeholderColor,
     ...other
   } = props;
@@ -30,6 +30,7 @@ export default function Input(props) {
   const onRightIconPress = React.useCallback(() => {
     if (secureTextEntry) setSecureText(prev => !prev);
   }, [secureTextEntry]);
+
   return(
     <View style={containerStyle}>
       <View style={theme.rowAlignedBetween}>

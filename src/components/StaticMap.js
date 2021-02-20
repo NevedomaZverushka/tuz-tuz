@@ -1,19 +1,13 @@
 import React from 'react';
 import getTheme from "../global/Style";
 import {useDispatch, useSelector} from "react-redux";
-import {Animated, Easing, ImageBackground, Text, TouchableOpacity, View} from "react-native";
-import {convertDistance, getDistance} from "../utils/Distance";
+import {Animated, Easing, TouchableOpacity, View} from "react-native";
+import {getDistance} from "../utils/Distance";
 import {cleanAction, setAction} from "../store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {getPlaceDetail} from "../utils/Geolocation";
-import {Button, Icon, Popup, SearchBox} from "./index";
-import {GOOGLE_API_KEY} from "../global/Constants";
+import {Icon, SearchBox} from "./index";
 import Toast from "react-native-simple-toast";
-
-const getImageUrl = (image) => {
-    const { photo_reference, height, width } = image;
-    return `https://maps.googleapis.com/maps/api/place/photo?key=${GOOGLE_API_KEY}&photoreference=${photo_reference}&maxheight=${height}&maxwidth=${width}`;
-};
 
 let movedToCurrent = false;
 
@@ -23,11 +17,9 @@ export default function StaticMap(props) {
     const {token, userLocation, selectedPlace} = useSelector(state => state);
     const dispatch = useDispatch();
 
-    const { mapRef, setPins, modal, setModal, onGoToLocation } = props;
+    const { mapRef, onSelect, movingAnimation, setPins, setModal} = props;
 
     const [followUserMode, setFollowUserMode] = React.useState(true);
-
-    const movingAnimation = React.useRef(new Animated.Value(60)).current;
 
     const onMoveToCurrentLocation = React.useCallback((flag = true, callback) => {
         const { lat, lng } = userLocation;
@@ -55,9 +47,9 @@ export default function StaticMap(props) {
     }, [userLocation]);
     const onUnlocked = React.useCallback(() => {
         setFollowUserMode(true);
-        setModal(false);
-        setPins([]);
         dispatch(cleanAction('place'));
+        setPins([]);
+        setModal(false);
     }, []);
     const onSelectFavoriteLocation = React.useCallback(() => {
         AsyncStorage.getItem('@favorites')
@@ -102,7 +94,6 @@ export default function StaticMap(props) {
                 .then(res => {
                     if (res.status === 200) {
                         const { geometry, formatted_address, photos, name } = res.data.result;
-                        setPins([{ location: geometry.location, color: theme.textSecondary }]);
 
                         AsyncStorage.getItem('@favorites')
                             .then((favorites) => {
@@ -113,22 +104,23 @@ export default function StaticMap(props) {
                                         if (favorite.placeId === selectedPlace.placeId) isFavorite = true;
                                     });
                                 }
+                                const place = {
+                                    name,
+                                    location: geometry.location,
+                                    address: formatted_address,
+                                    photo: photos && photos?.length !== 0 ? photos[0] : null,
+                                    distance: onGetDistance(geometry.location),
+                                    isFavorite,
+                                    isFullData: true
+                                };
 
                                 dispatch(
                                     setAction(
                                         'place',
-                                        {
-                                            name,
-                                            location: geometry.location,
-                                            address: formatted_address,
-                                            photo: photos && photos?.length !== 0 ? photos[0] : null,
-                                            distance: onGetDistance(geometry.location),
-                                            isFavorite,
-                                            isFullData: true
-                                        }
+                                        place
                                     )
                                 );
-                                setModal(true);
+                                onSelect(place);
                                 onMoveToLocation({ lat: geometry.location.lat, lng: geometry.location.lng });
                             })
                     }
@@ -136,22 +128,6 @@ export default function StaticMap(props) {
                 });
         }
     }, [selectedPlace.placeId, token]);
-    React.useEffect(() => {
-        if (modal) {
-            Animated.timing(movingAnimation, {
-                toValue: 310,
-                easing: Easing.linear(),
-                duration: 300
-            }).start();
-        }
-        else {
-            Animated.timing(movingAnimation, {
-                toValue: 60,
-                easing: Easing.linear(),
-                duration: 300
-            }).start();
-        }
-    }, [modal]);
 
     return(
         <React.Fragment>
@@ -168,15 +144,6 @@ export default function StaticMap(props) {
                             />
                         </TouchableOpacity>
                         <View style={{ height: theme.scale(15) }} />
-                        <TouchableOpacity onPress={() => onMoveToLocation(selectedPlace.location)}>
-                            <Icon
-                                name={'map-marker-alt'}
-                                color={theme.textSecondary}
-                                size={theme.scale(22)}
-                                style={styles.roundBtn}
-                            />
-                        </TouchableOpacity>
-                        <View style={{ height: theme.scale(15) }} />
                     </React.Fragment>
                 )}
                 <TouchableOpacity onPress={() => onMoveToCurrentLocation(false)}>
@@ -187,68 +154,7 @@ export default function StaticMap(props) {
                         style={styles.roundBtn}
                     />
                 </TouchableOpacity>
-                {(selectedPlace.isFullData && !modal) && (
-                    <React.Fragment>
-                        <View style={{ height: theme.scale(15) }} />
-                        <TouchableOpacity onPress={() => setModal(true)}>
-                            <Icon
-                                name={'layers-outline'}
-                                color={theme.textSecondary}
-                                size={theme.scale(25)}
-                                style={styles.roundBtn}
-                            />
-                        </TouchableOpacity>
-                    </React.Fragment>
-                )}
             </Animated.View>
-            <Popup visible={modal} style={styles.modal} onClose={() => setModal(false)}>
-                {selectedPlace.isFullData && (
-                    <View style={theme.rowAlignedCenterVertical}>
-                        <View style={styles.row}>
-                            <View style={styles.bar} />
-                        </View>
-                        <View style={theme.rowAlignedBetweenStretch}>
-                            <ImageBackground
-                                source={
-                                    selectedPlace.photo
-                                        ? {uri: getImageUrl(selectedPlace.photo)}
-                                        : require('../assets/images/placeholder.jpg')
-                                }
-                                style={styles.image}
-                                resizeMode={'cover'}
-                            />
-                            <View style={styles.textBox}>
-                                <View style={[theme.rowAlignedBetweenStretch, { flex: 1 }]}>
-                                    <Text style={[styles.primaryText, { flex: 0.9 }]} numberOfLines={1}>
-                                        {selectedPlace.name}
-                                    </Text>
-                                    <TouchableOpacity
-                                        style={{ paddingLeft: theme.scale(20), flex: 0.1 }}
-                                        onPress={onSelectFavoriteLocation}
-                                    >
-                                        <Icon
-                                            name={selectedPlace.isFavorite ? 'star' : 'star-border'}
-                                            color={theme.textSecondary}
-                                            size={theme.scale(20)}
-                                        />
-                                    </TouchableOpacity>
-                                </View>
-                                <Text style={styles.secondaryText} numberOfLines={2}>
-                                    {selectedPlace.address}
-                                </Text>
-                                <Text style={styles.detailsText}>
-                                    {convertDistance(selectedPlace.distance)} away
-                                </Text>
-                            </View>
-                        </View>
-                        <Button
-                            text={'Create route'}
-                            onPress={onGoToLocation}
-                            containerStyle={{ flex: 1, width: '100%', marginTop: theme.scale(22) }}
-                        />
-                    </View>
-                )}
-            </Popup>
         </React.Fragment>
     )
 }
@@ -269,14 +175,6 @@ function getStyles(theme) {
             padding: theme.scale(10),
             backgroundColor: theme.rgba(theme.grey, 0.8),
             borderRadius: 150/2,
-        },
-        modal: {
-            height: theme.scale(230),
-            backgroundColor: theme.rgba(theme.black, 0.8),
-            borderTopLeftRadius: theme.scale(20),
-            borderTopRightRadius: theme.scale(20),
-            paddingTop: theme.scale(20),
-            paddingHorizontal: theme.scale(20),
         },
         image: {
             height: theme.scale(110),

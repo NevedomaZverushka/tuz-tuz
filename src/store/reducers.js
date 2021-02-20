@@ -85,6 +85,22 @@ export default function reducers(state = initialState, action) {
       const { bounds } = initialState;
       return { ...state, bounds };
     }
+    case "SET_START_LOCATION": {
+      const { payload } = action;
+      return { ...state, startLocation: payload };
+    }
+    case "CLEAN_START_LOCATION": {
+      const { startLocation } = initialState;
+      return { ...state, startLocation };
+    }
+    case "SET_END_LOCATION": {
+      const { payload } = action;
+      return { ...state, endLocation: payload };
+    }
+    case "CLEAN_END_LOCATION": {
+      const { endLocation } = initialState;
+      return { ...state, endLocation };
+    }
     default: return state;
   }
 };

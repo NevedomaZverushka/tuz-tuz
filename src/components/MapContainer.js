@@ -19,6 +19,7 @@ export default function MapContainer(props) {
     const theme = getTheme();
 
     const markers = React.useMemo(() => {
+        console.log(pins)
         return pins.map((pin, idx) => {
             const { color, location } = pin;
             return(
@@ -32,7 +33,6 @@ export default function MapContainer(props) {
         });
     }, [pins]);
 
-    //console.log(points);
     return(
         <MapView
             ref={(map) => onSetRef(map)}
@@ -58,7 +58,7 @@ export default function MapContainer(props) {
             {points.length !== 0 && (
                 <Polyline
                     coordinates={points}
-                    strokeColor={theme.rgba(theme.textAccent, 0.5)}
+                    strokeColor={theme.rgba(theme.textPrimary, 0.5)}
                     strokeWidth={6}
                 />
             )}

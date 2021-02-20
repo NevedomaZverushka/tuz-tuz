@@ -266,14 +266,14 @@ function getStyles(theme) {
         ],
         placeText: theme.textStyle({
             font: 'NunitoRegular',
-            color: 'textPlaceholder',
+            color: 'textPrimary',
             size: 14,
             align: 'left'
         }),
         distanceText: [
             theme.textStyle({
                 font: 'NunitoRegular',
-                color: 'textSecondary',
+                color: 'white',
                 size: 12,
                 align: 'right'
             }),
@@ -284,7 +284,7 @@ function getStyles(theme) {
         placeholder: [
             theme.textStyle({
                 font: 'NunitoRegular',
-                color: 'textPrimary',
+                color: 'white',
                 size: 14,
                 align: 'left'
             }),
@@ -295,7 +295,7 @@ function getStyles(theme) {
         secondaryPlaceholder: [
             theme.textStyle({
                 font: 'NunitoRegular',
-                color: 'textPrimary',
+                color: 'white',
                 size: 14,
                 align: 'center'
             }),

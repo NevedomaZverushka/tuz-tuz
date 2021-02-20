@@ -8,7 +8,10 @@ const SET_ACTIONS = {
   history: 'SET_RECENT_LOCATIONS',
   app: 'SET_APP_READY',
   directions: 'SET_DIRECTIONS',
-  bounds: 'SET_BOUNDS'
+  bounds: 'SET_BOUNDS',
+
+  startLocation: 'SET_START_LOCATION',
+  endLocation: 'SET_END_LOCATION'
 };
 const CLEAN_ACTIONS = {
   toast: 'HIDE_TOAST',
@@ -18,7 +21,10 @@ const CLEAN_ACTIONS = {
   location: 'CLEAN_LOCATION',
   place: 'CLEAN_PLACE',
   directions: 'CLEAN_DIRECTIONS',
-  bounds: 'CLEAN_BOUNDS'
+  bounds: 'CLEAN_BOUNDS',
+
+  startLocation: 'CLEAN_START_LOCATION',
+  endLocation: 'CLEAN_END_LOCATION'
 };
 
 export const setAction = (type, payload) => {

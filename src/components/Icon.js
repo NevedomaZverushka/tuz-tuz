@@ -13,12 +13,11 @@ const iconsMaterialCommunityIcons = [
   'eye-off-outline',
   'eye-outline',
   'email-outline',
-  'delete-outline',
-  'close'
+  'delete-outline'
 ];
 const iconsEntypo = ['plus', 'chevron-left', 'chevron-right'];
-const iconsFeather = ['edit-2', 'copy', 'file', 'download', 'delete'];
-const iconsMaterialIcons = ['file-download-done', 'arrow-back', 'search', 'close', 'star', 'star-border', 'my-location', 'layers-outline', 'navigation'];
+const iconsFeather = ['edit-2', 'copy', 'file', 'download', 'delete', 'arrow-up-left'];
+const iconsMaterialIcons = ['file-download-done', 'arrow-back', 'search', 'close', 'star', 'star-border', 'my-location', 'layers-outline', 'navigation', 'access-time'];
 const iconsFontAwesome5 = ['map-marker-alt'];
 
 const selectIcon = (name) => {
