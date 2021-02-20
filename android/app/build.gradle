@@ -168,6 +168,7 @@ android {
 }
 
 dependencies {
+    implementation project(':@react-native-voice_voice')
     implementation project(':react-native-secure-storage')
     implementation project(':react-native-splash-screen')
     implementation project(':lottie-react-native')

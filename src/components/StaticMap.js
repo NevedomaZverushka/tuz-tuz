@@ -9,6 +9,7 @@ import {getPlaceDetail} from "../utils/Geolocation";
 import {Button, Icon, Popup, SearchBox} from "./index";
 import {GOOGLE_API_KEY} from "../global/Constants";
 import Toast from "react-native-simple-toast";
+import Voice from '@react-native-voice/voice';
 
 const getImageUrl = (image) => {
     const { photo_reference, height, width } = image;
@@ -26,6 +27,7 @@ export default function StaticMap(props) {
     const { mapRef, setPins, modal, setModal, onGoToLocation } = props;
 
     const [followUserMode, setFollowUserMode] = React.useState(true);
+    const [voiceInputOn, setVoiceInput] = React.useState(false);
 
     const movingAnimation = React.useRef(new Animated.Value(60)).current;
 
@@ -153,6 +155,25 @@ export default function StaticMap(props) {
         }
     }, [modal]);
 
+    React.useEffect(() => {
+        if (voiceInputOn) {
+            Voice.start('ru-RU')
+        }
+        else {
+            Voice.stop();
+        }
+    }, [voiceInputOn]);
+
+    const onVoiceInputEnd = React.useCallback((text) => {
+        console.log(text);
+    }, []);
+
+    React.useEffect(() => {
+        Voice.onSpeechStart = () => {};
+        Voice.onSpeechEnd = () => {};
+        Voice.onSpeechResults = onVoiceInputEnd;
+    });
+
     return(
         <React.Fragment>
             <SearchBox locked={!followUserMode} onClearLocation={onUnlocked} />
@@ -179,6 +200,15 @@ export default function StaticMap(props) {
                         <View style={{ height: theme.scale(15) }} />
                     </React.Fragment>
                 )}
+                <TouchableOpacity onPress={() => setVoiceInput(!voiceInputOn)}>
+                    <Icon
+                        name={'microphone'}
+                        color={theme.textSecondary}
+                        size={theme.scale(25)}
+                        style={styles.roundBtn}
+                    />
+                </TouchableOpacity>
+                <View style={{ height: theme.scale(15) }} />
                 <TouchableOpacity onPress={() => onMoveToCurrentLocation(false)}>
                     <Icon
                         name={'my-location'}
@@ -187,6 +217,7 @@ export default function StaticMap(props) {
                         style={styles.roundBtn}
                     />
                 </TouchableOpacity>
+
                 {(selectedPlace.isFullData && !modal) && (
                     <React.Fragment>
                         <View style={{ height: theme.scale(15) }} />
