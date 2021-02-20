@@ -29,7 +29,8 @@ export default function StaticMap(props) {
     const [followUserMode, setFollowUserMode] = React.useState(true);
 
     const [voiceInputOn, setVoiceInput] = React.useState(false);
-    const voiceAnim = useRef(new Animated.Value(0.0)).current;
+    const voiceAnim = React.useRef(new Animated.Value(1)).current;
+    const springValue = React.useRef(new Animated.Value(0)).current;
 
     const movingAnimation = React.useRef(new Animated.Value(60)).current;
 
@@ -159,10 +160,35 @@ export default function StaticMap(props) {
 
     React.useEffect(() => {
         if (voiceInputOn) {
-            Voice.start('ru-RU')
+            Voice.start('ru-RU');
+
+
+            let fadeInAndOut = Animated.sequence([
+                Animated.timing(voiceAnim, {
+                    toValue: 1,
+                    duration: 750,
+                }),
+                Animated.timing(voiceAnim, {
+                    toValue: 0,
+                    duration: 750,
+                }),
+            ]);
+
+            Animated.loop(
+                Animated.parallel([
+                    fadeInAndOut,
+                    Animated.timing(springValue, {
+                        toValue: 1,
+                        friction: 3,
+                        tension: 40,
+                        duration: 1500,
+                    }),
+                ]),
+            ).start();
         }
         else {
             Voice.stop();
+            springValue.stopAnimation();
         }
     }, [voiceInputOn]);
 
@@ -202,17 +228,13 @@ export default function StaticMap(props) {
                         <View style={{ height: theme.scale(15) }} />
                     </React.Fragment>
                 )}
-                <Animated.View>
+                <Animated.View style={{ opacity: voiceAnim }}>
                     <TouchableOpacity onPress={() => setVoiceInput(!voiceInputOn)}>
                         <Icon
                             name={'microphone'}
                             color={theme.textSecondary}
                             size={theme.scale(25)}
-                            style={[styles.roundBtn, {
-                                borderColor: theme.textSecondary,
-                                borderWidth: 4,
-                                opacity: voiceAnim
-                            }]}
+                            style={styles.roundBtn}
                         />
                     </TouchableOpacity>
                 </Animated.View>

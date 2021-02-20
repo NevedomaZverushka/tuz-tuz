@@ -3,6 +3,7 @@ package com.arnavi;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
 import com.wenkesj.voice.VoicePackage;
 import li.yunqi.rnsecurestorage.RNSecureStoragePackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
@@ -40,6 +41,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactCheckBoxPackage(),
             new VoicePackage(),
             new RNSecureStoragePackage(),
             new SplashScreenReactPackage(),

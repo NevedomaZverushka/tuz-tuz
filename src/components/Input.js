@@ -12,7 +12,7 @@ export default function Input(props) {
     secureTextEntry,
     label = '',
     containerStyle,
-    borderNone,
+    borderNone = true,
       placeholderColor,
     ...other
   } = props;
