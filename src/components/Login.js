@@ -20,12 +20,14 @@ export default function Login() {
     const [toggleCheckBox, setToggleCheckBox] = React.useState(false);
 
     const onLogIn = React.useCallback(() => {
+        dispatch(setAction('spinner', true));
         API.loginUser({email, password})
             .then(res => {
                 if (res && res.status === 200) {
                     SecureStorage.setItem('token', res.data.token)
                         .then(() => {
                             dispatch(setAction('user', res.data.user));
+                            dispatch(setAction('spinner', false));
                             if (!toggleCheckBox) navigate('Home');
                             else navigate('OrderList');
                         });

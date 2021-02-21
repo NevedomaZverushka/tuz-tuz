@@ -4,7 +4,6 @@ import {StatusBar, PermissionsAndroid} from 'react-native';
 import {Provider, useDispatch, useSelector} from 'react-redux';
 import {store, setAction} from "./src/store";
 
-import UUIDGenerator from 'react-native-uuid-generator';
 import Geolocation from '@react-native-community/geolocation';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import Navigator from "./src/Navigator";
@@ -19,6 +18,7 @@ function AppRoot() {
     const spinner = useSelector(state => state.spinner);
 
     const configureLocation = async () => {
+        dispatch(setAction('spinner', true));
         // Request permission
         const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
             {
@@ -39,6 +39,7 @@ function AppRoot() {
                             const {longitude, latitude} = info.coords;
                             dispatch(setAction('location', {lat: latitude, lng: longitude}));
                             dispatch(setAction('app'));
+                            dispatch(setAction('spinner', false));
                         }, askGPS,
                         {
                             timeout: 10000,
