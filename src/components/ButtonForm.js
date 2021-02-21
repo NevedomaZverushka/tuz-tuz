@@ -30,7 +30,7 @@ function getStyles(theme) {
     },
     buttonText: theme.textStyle({
       size: 18,
-      align: 'left',
+      align: 'center',
       font: 'NunitoBold',
       color: 'background',
     }),

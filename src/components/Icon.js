@@ -16,7 +16,9 @@ const iconsMaterialCommunityIcons = [
   'delete-outline',
     'source-commit-end',
     'source-commit-start',
-    'source-commit'
+    'source-commit',
+    'form-select',
+    'road-variant'
 ];
 const iconsEntypo = ['plus', 'chevron-left', 'chevron-right'];
 const iconsFeather = ['edit-2', 'copy', 'file', 'download', 'delete', 'arrow-up-left', 'check'];
