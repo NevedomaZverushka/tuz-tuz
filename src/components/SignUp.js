@@ -30,9 +30,9 @@ export default function SignUp() {
                 if (res && res.status === 200) {
                     SecureStorage.setItem('token', res.data.token)
                         .then(() => {
-                            dispatch(setAction('spinner', false));
                             if (!toggleCheckBox) navigate('Home');
                             else navigate('OrderList');
+                            dispatch(setAction('spinner', false));
                         });
                 }
             });

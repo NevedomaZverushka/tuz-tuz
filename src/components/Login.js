@@ -27,9 +27,9 @@ export default function Login() {
                     SecureStorage.setItem('token', res.data.token)
                         .then(() => {
                             dispatch(setAction('user', res.data.user));
-                            dispatch(setAction('spinner', false));
                             if (!toggleCheckBox) navigate('Home');
                             else navigate('OrderList');
+                            dispatch(setAction('spinner', false));
                         });
                 }
             });
