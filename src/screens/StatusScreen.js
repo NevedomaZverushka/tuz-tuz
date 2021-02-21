@@ -1,13 +1,16 @@
 import React from 'react';
-import {View, Text, TouchableOpacity} from "react-native";
+import {View, Text, TouchableOpacity, ImageBackground} from "react-native";
 import getTheme from "../global/Style";
-import {ButtonForm, Icon} from "../components";
+import {Button, ButtonForm, Icon, Popup} from "../components";
 import SecureStorage from "react-native-secure-storage";
 import API from "../global/API";
+import {API_URL} from "@env";
 import {useNavigation} from "@react-navigation/native";
 
 const Choose = (props) => {
     const {theme, styles, agreements} = props;
+
+    const [driver, setDriver] = React.useState(null);
 
     // const agreement = agreements[0];
     // SecureStorage.getItem('token')
@@ -19,10 +22,38 @@ const Choose = (props) => {
     return (
         <React.Fragment>
             <Text style={styles.textStep}>Step 1</Text>
-            <Text style={styles.textStatus}>Status: choosing your driver</Text>
+            <Text style={[styles.textStatus, { marginBottom: theme.scale(10) }]}>Status: choosing your driver</Text>
             {agreements.map((agreement, idx) => {
-                return <Text key={idx}>{`${agreement.driver.firstName} ${agreement.driver.lastName}`}</Text>;
+                return(
+                    <TouchableOpacity style={styles.orderRow} onPress={() => setDriver(agreement.driver)} key={idx}>
+                        <Text style={[styles.subtitle2, { flex: 1 }]}>
+                            {`${agreement.driver.firstName} ${agreement.driver.lastName}`}
+                        </Text>
+                        <Button
+                            containerStyle={styles.orderButton}
+                            text={'Select'}
+                            buttonColor={theme.textPlaceholder}
+                            textColor={theme.black}
+                            onPress={() => {}}
+                        />
+                    </TouchableOpacity>
+                );
             })}
+            <Popup visible={driver !== null} style={styles.modal} onClose={() => setDriver(null)}>
+                <View style={[{ flex: 0.8 }, theme.rowAlignedCenterVertical]}>
+                    <Text style={styles.subtitle}>
+                        Driver
+                    </Text>
+                    <Text style={styles.title} numberOfLines={1}>
+                        {`${driver?.firstName} ${driver?.lastName}`}
+                    </Text>
+                </View>
+                <ImageBackground
+                    style={styles.image}
+                    source={{ uri: `${API_URL}/public/${driver?.carImage}` }}
+                    resizeMode={"cover"}
+                />
+            </Popup>
         </React.Fragment>
     )
 };
@@ -106,7 +137,6 @@ export default function StatusScreen(props) {
     const styles = getStyles(theme);
     const {order} = props.route.params;
     const [agreements, setAgreements] = React.useState([]);
-    const [driver, setDriver] = React.useState(null);
 
     const refreshAgreements = React.useCallback(() => {
         SecureStorage.getItem('token')
@@ -154,7 +184,7 @@ export default function StatusScreen(props) {
                 />
             </View>
             {statuses.choose.status && (
-                <Choose styles={styles} agreements={agreements}/>
+                <Choose theme={theme} styles={styles} agreements={agreements}/>
             )}
             {statuses.waiting.status && (
                 <Waiting styles={styles} theme={theme}/>
@@ -198,5 +228,55 @@ function getStyles(theme) {
                 align: 'center'
             })
         ],
+        orderRow: {
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%",
+            padding: theme.scale(12),
+            backgroundColor: theme.white,
+            marginVertical: theme.scale(10),
+            borderRadius: theme.scale(5),
+            borderWidth: theme.scale(3),
+            borderColor: theme.textPrimary,
+            borderStyle: 'solid',
+            paddingHorizontal: theme.scale(10),
+        },
+        orderButton: {
+            display: "flex",
+            flex: 0.4,
+            paddingHorizontal: theme.scale(0),
+        },
+        image: {
+            width: "100%",
+            height: theme.scale(150)
+        },
+        modal: {
+            height: theme.scale(250),
+            backgroundColor: theme.rgba(theme.grey, 0.8),
+            borderTopLeftRadius: theme.scale(20),
+            borderTopRightRadius: theme.scale(20),
+            paddingTop: theme.scale(20),
+            paddingHorizontal: theme.scale(20),
+        },
+        title: theme.textStyle({
+            size: 18,
+            font: 'NunitoBold',
+            color: 'white',
+            align: 'center'
+        }),
+        subtitle2: theme.textStyle({
+            size: 14,
+            font: 'NunitoMedium',
+            color: 'background',
+            align: 'left'
+        }),
+        subtitle: theme.textStyle({
+            size: 14,
+            font: 'NunitoMedium',
+            color: 'background',
+            align: 'center'
+        }),
     }
 }
