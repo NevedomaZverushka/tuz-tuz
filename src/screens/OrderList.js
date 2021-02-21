@@ -37,11 +37,13 @@ export default function OrderList() {
             <ScrollView style={styles.scrollView}>
                 {orders.map((order, idx) => {
                     return <View key={idx} style={styles.orderRow}>
-                        <Text style={{flex: 1}}>{`From ${order.from} to ${order.to}`}</Text>
+                        <View style={{ flex: 1, ...theme.rowAlignedVertical }}>
+                            <Text numberOfLines={1}>{`From ${order.from} to ${order.to}`}</Text>
+                        </View>
                         <Button containerStyle={styles.orderButton}
-                                text={'Select'}
-                                buttonColor={theme.textSecondary}
-                                textColor={theme.black}
+                            text={'View'}
+                            buttonColor={theme.textPlaceholder}
+                            textColor={theme.black}
                         />
                     </View>
                 })}
@@ -52,6 +54,11 @@ export default function OrderList() {
 
 function getStyles(theme) {
     return {
+        scrollView: {
+            backgroundColor: theme.grey,
+            paddingHorizontal: theme.scale(15),
+            paddingVertical: theme.scale(10)
+        },
         orderRow: {
             display: "flex",
             flexDirection: "row",
@@ -59,7 +66,9 @@ function getStyles(theme) {
             alignItems: "center",
             width: "100%",
             padding: theme.scale(12),
-            backgroundColor: theme.grey,
+            backgroundColor: theme.white,
+            marginVertical: theme.scale(10),
+            borderRadius: theme.scale(5),
         },
         orderButton: {
             flex: 0.4,
