@@ -20,7 +20,7 @@ export default function Navigator() {
     return (
         <NavigationContainer>
             <Stack.Navigator
-                initialRouteName={'Splash'}
+                initialRouteName={'Auth'}
                 screenOptions={{headerShown: false}}
             >
                 {/*    {!status && <Stack.Screen name="Splash" component={Splash} options={{headerShown: false}}/>}*/}

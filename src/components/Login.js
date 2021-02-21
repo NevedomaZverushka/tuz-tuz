@@ -36,7 +36,7 @@ export default function Login() {
     }, [email, password, toggleCheckBox]);
 
     React.useEffect(() => {
-        SecureStorage.setItem('isDriver', toggleCheckBox? 'true' : 'false')
+        SecureStorage.setItem('isDriver', toggleCheckBox? 'true' : 'false');
     }, [toggleCheckBox]);
 
     return (

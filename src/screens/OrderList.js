@@ -24,7 +24,8 @@ export default function OrderList() {
                         if (res && res.status === 200) {
                             setOrders(res.data.orders);
                         }
-                    });
+                    })
+                    .catch(err => console.log(err));
             });
     });
 

@@ -66,6 +66,21 @@ const API = {
             { headers: {Authorization: `Bearer ${token}`}})
             .then(res => res)
     },
+    currentAgreement:  async (token) => {
+        return await axios.get(`${API_URL}/api/agreements/current`,
+            { headers: {Authorization: `Bearer ${token}`}})
+            .then(res => res)
+    },
+    addAgreement:  async (orderId, token) => {
+        return await axios.post(`${API_URL}/api/agreements`, {order_id: orderId},
+            { headers: {Authorization: `Bearer ${token}`}})
+            .then(res => res)
+    },
+    setOrderDone:  async (orderId, token) => {
+        return await axios.post(`${API_URL}/api/orders/${orderId}/move_status`, {},
+            { headers: {Authorization: `Bearer ${token}`}})
+            .then(res => res)
+    },
 
     createOrder: async (data, token) => {
         const formData = new FormData();
