@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import getTheme from "../global/Style";
 import {useDispatch, useSelector} from "react-redux";
-import {Animated, Easing, TouchableOpacity, View} from "react-native";
+import {Animated, TouchableOpacity, View} from "react-native";
 import {getDistance} from "../utils/Distance";
 import {cleanAction, setAction} from "../store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -25,8 +25,6 @@ export default function StaticMap(props) {
     const [voiceInputOn, setVoiceInput] = React.useState(false);
     const voiceAnim = React.useRef(new Animated.Value(1)).current;
     const springValue = React.useRef(new Animated.Value(0)).current;
-
-    const movingAnimation = React.useRef(new Animated.Value(60)).current;
 
     const onMoveToCurrentLocation = React.useCallback((flag = true, callback) => {
         const { lat, lng } = userLocation;

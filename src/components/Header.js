@@ -9,17 +9,21 @@ export default function Header(props) {
   const styles = getStyles(theme);
   return(
     <View style={styles.header}>
-      <TouchableOpacity onPress={onClickLeftIcon} style={{ flex: 0.1 }}>
-        <Icon
-            size={theme.scale(28)}
-            name={leftIcon}
-            color={theme.textPrimary}
-        />
-      </TouchableOpacity>
+      {leftIcon && (
+          <TouchableOpacity onPress={onClickLeftIcon} style={{ flex: 0.1 }}>
+            <Icon
+                size={theme.scale(28)}
+                name={leftIcon}
+                color={theme.textPrimary}
+            />
+          </TouchableOpacity>
+      )}
       <View style={[{ flex: 0.8 }, theme.rowAlignedCenterVertical]}>
-        <Text style={styles.subtitle}>
-          {subtext}
-        </Text>
+        {subtext && (
+            <Text style={styles.subtitle}>
+              {subtext}
+            </Text>
+        )}
         <Text style={styles.title}>
           {text}
         </Text>
@@ -44,8 +48,10 @@ function getStyles(theme) {
       display: "flex",
       flexDirection: "row",
       alignItems: "center",
+      justifyContent: "center",
       paddingHorizontal: theme.scale(15),
-      paddingVertical: theme.scale(15)
+      paddingVertical: theme.scale(15),
+      backgroundColor: theme.white
     },
     title: theme.textStyle({
       size: 18,
