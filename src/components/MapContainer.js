@@ -19,7 +19,6 @@ export default function MapContainer(props) {
     const theme = getTheme();
 
     const markers = React.useMemo(() => {
-        console.log(pins)
         return pins.map((pin, idx) => {
             const { color, location } = pin;
             return(

@@ -25,7 +25,7 @@ export default function Header(props) {
         </Text>
       </View>
       {rightIcon && (
-          <TouchableOpacity onPress={onClickRightIcon}>
+          <TouchableOpacity onPress={onClickRightIcon} style={{ flex: 0.1 }}>
             <Icon
                 size={theme.scale(25)}
                 name={rightIcon}

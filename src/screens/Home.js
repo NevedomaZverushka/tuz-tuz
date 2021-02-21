@@ -15,7 +15,7 @@ export default function Home() {
     const styles = getStyles(theme);
     const dispatch = useDispatch();
     const {navigate} = useNavigation();
-    const { selectedPlace } = useSelector(state => state);
+    const { selectedPlace, startLocation, endLocation, userLocation } = useSelector(state => state);
 
     const [mapRef, setMapRef] = React.useState(null);
     const [modal, setModal] = React.useState(false);
@@ -63,9 +63,15 @@ export default function Home() {
     }, [selectedPlace]);
 
     const onFinish = React.useCallback(() => {
+        if (!startLocation) {
+            dispatch(setAction('startLocation', { location: userLocation }));
+        }
+        if (!endLocation) {
+            dispatch(setAction('endLocation', selectedPlace));
+        }
+
         navigate('Form');
-        dispatch(setAction('spinner', true));
-    }, [selectedPlace]);
+    }, [selectedPlace, startLocation, userLocation, endLocation]);
 
     React.useEffect(() => {
         if (modal) {
@@ -109,7 +115,7 @@ export default function Home() {
                     <Text style={styles.subtitle}>
                         Address:
                     </Text>
-                    <Text style={styles.title}>
+                    <Text style={styles.title} numberOfLines={1}>
                         {selectedPlace.name}
                     </Text>
                 </View>

@@ -3,8 +3,12 @@ package com.arnavi;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+<<<<<<< Updated upstream
 import com.reactnativecommunity.checkbox.ReactCheckBoxPackage;
 import com.wenkesj.voice.VoicePackage;
+=======
+import com.imagepicker.ImagePickerPackage;
+>>>>>>> Stashed changes
 import li.yunqi.rnsecurestorage.RNSecureStoragePackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.heanoria.library.reactnative.locationenabler.RNAndroidLocationEnablerPackage;
@@ -41,8 +45,12 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+<<<<<<< Updated upstream
             new ReactCheckBoxPackage(),
             new VoicePackage(),
+=======
+            new ImagePickerPackage(),
+>>>>>>> Stashed changes
             new RNSecureStoragePackage(),
             new SplashScreenReactPackage(),
             new RNAndroidLocationEnablerPackage(),

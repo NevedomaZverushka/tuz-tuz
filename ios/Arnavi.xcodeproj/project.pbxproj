@@ -66,6 +66,7 @@
 		A9264809C7994452974E5C70 /* libRNCWebView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 16111FD482D848F3906791FB /* libRNCWebView.a */; };
 		E09E438F962C4B60811118A6 /* libVoice.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F91DB4DE7C24B178E0EC9FE /* libVoice.a */; };
 		9270DB7036B4495E86412947 /* libRNCCheckbox.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFB8F044D197445AAB24F622 /* libRNCCheckbox.a */; };
+		FE06022F531B45AA92AE07F6 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 165BCA8942994497ADA789CC /* libRNImagePicker.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -419,6 +420,8 @@
 		0F91DB4DE7C24B178E0EC9FE /* libVoice.a */ = {isa = PBXFileReference; name = "libVoice.a"; path = "libVoice.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		020520C1213941109D06E874 /* RNCCheckbox.xcodeproj */ = {isa = PBXFileReference; name = "RNCCheckbox.xcodeproj"; path = "../node_modules/@react-native-community/checkbox/ios/RNCCheckbox.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		CFB8F044D197445AAB24F622 /* libRNCCheckbox.a */ = {isa = PBXFileReference; name = "libRNCCheckbox.a"; path = "libRNCCheckbox.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		149192339459465E96BC12F7 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; name = "RNImagePicker.xcodeproj"; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		165BCA8942994497ADA789CC /* libRNImagePicker.a */ = {isa = PBXFileReference; name = "libRNImagePicker.a"; path = "libRNImagePicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -467,6 +470,7 @@
 				A9264809C7994452974E5C70 /* libRNCWebView.a in Frameworks */,
 				E09E438F962C4B60811118A6 /* libVoice.a in Frameworks */,
 				9270DB7036B4495E86412947 /* libRNCCheckbox.a in Frameworks */,
+				FE06022F531B45AA92AE07F6 /* libRNImagePicker.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -679,6 +683,7 @@
 				4419B3DD25ED4D8981C7EBC5 /* RNCWebView.xcodeproj */,
 				2162BC4797EC403089AC55D0 /* Voice.xcodeproj */,
 				020520C1213941109D06E874 /* RNCCheckbox.xcodeproj */,
+				149192339459465E96BC12F7 /* RNImagePicker.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1348,6 +1353,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)/../node_modules/@react-native-voice/voice/ios/Voice",
 					"$(SRCROOT)/../node_modules/@react-native-community/checkbox/ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 				);
 			};
 			name = Debug;
@@ -1396,6 +1402,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)/../node_modules/@react-native-voice/voice/ios/Voice",
 					"$(SRCROOT)/../node_modules/@react-native-community/checkbox/ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 				);
 			};
 			name = Release;
@@ -1437,6 +1444,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)/../node_modules/@react-native-voice/voice/ios/Voice",
 					"$(SRCROOT)/../node_modules/@react-native-community/checkbox/ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 				);
 			};
 			name = Debug;
@@ -1477,6 +1485,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)/../node_modules/@react-native-voice/voice/ios/Voice",
 					"$(SRCROOT)/../node_modules/@react-native-community/checkbox/ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 				);
 			};
 			name = Release;
@@ -1533,6 +1542,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)/../node_modules/@react-native-voice/voice/ios/Voice",
 					"$(SRCROOT)/../node_modules/@react-native-community/checkbox/ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 				);
 			};
 			name = Debug;
@@ -1589,6 +1599,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)/../node_modules/@react-native-voice/voice/ios/Voice",
 					"$(SRCROOT)/../node_modules/@react-native-community/checkbox/ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 				);
 			};
 			name = Release;
@@ -1644,6 +1655,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)/../node_modules/@react-native-voice/voice/ios/Voice",
 					"$(SRCROOT)/../node_modules/@react-native-community/checkbox/ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 				);
 			};
 			name = Debug;
@@ -1699,6 +1711,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-webview\ios",
 					"$(SRCROOT)/../node_modules/@react-native-voice/voice/ios/Voice",
 					"$(SRCROOT)/../node_modules/@react-native-community/checkbox/ios/**",
+					"$(SRCROOT)\..\node_modules\react-native-image-picker\ios",
 				);
 			};
 			name = Release;

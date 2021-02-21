@@ -8,15 +8,18 @@ import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-const iconsAntDesign = ['lock', 'user', 'export', 'paperclip', 'car'];
+const iconsAntDesign = ['lock', 'user', 'export', 'paperclip', 'car', 'camerao'];
 const iconsMaterialCommunityIcons = [
   'eye-off-outline',
   'eye-outline',
   'email-outline',
-  'delete-outline'
+  'delete-outline',
+    'source-commit-end',
+    'source-commit-start',
+    'source-commit'
 ];
 const iconsEntypo = ['plus', 'chevron-left', 'chevron-right'];
-const iconsFeather = ['edit-2', 'copy', 'file', 'download', 'delete', 'arrow-up-left'];
+const iconsFeather = ['edit-2', 'copy', 'file', 'download', 'delete', 'arrow-up-left', 'check'];
 const iconsMaterialIcons = ['file-download-done', 'arrow-back', 'search', 'close', 'star', 'star-border', 'my-location', 'layers-outline', 'navigation', 'access-time'];
 const iconsFontAwesome5 = ['map-marker-alt', 'microphone'];
 

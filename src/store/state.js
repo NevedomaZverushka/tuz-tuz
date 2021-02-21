@@ -17,8 +17,8 @@ const initialState = {
     isFavorite: false,
     isFullData: false
   },
-  startLocation: {},
-  endLocation: {},
+  startLocation: null,
+  endLocation: null,
   recentLocations: [],
   directions: [],
   bounds: [],
