@@ -5725,6 +5725,11 @@ react-native-modalbox@^2.0.2:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-picture-puzzle@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-picture-puzzle/-/react-native-picture-puzzle-1.0.0.tgz#3f4824ab7c089a9e01b124edb57daac4dfe0c5c2"
+  integrity sha512-2NzGOhE03uI7KdZsyV4syiMzp+GHNuL69w0RA9fufC5bLv00C3eSEqxT0WS2dMKtnDcsCiDU2KkZ2ISqW4SKrQ==
+
 react-native-safe-area-context@^3.1.9:
   version "3.1.9"
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-3.1.9.tgz#48864ea976b0fa57142a2cc523e1fd3314e7247e"

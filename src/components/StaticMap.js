@@ -5,10 +5,11 @@ import {Animated, TouchableOpacity, View} from "react-native";
 import {getDistance} from "../utils/Distance";
 import {cleanAction, setAction} from "../store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {getPlaceDetail} from "../utils/Geolocation";
+import {getPlaceDetail, searchPlace} from "../utils/Geolocation";
 import {Icon, SearchBox} from "./index";
 import Toast from "react-native-simple-toast";
 import Voice from '@react-native-voice/voice';
+import {useNavigation} from "@react-navigation/native";
 
 let movedToCurrent = false;
 
@@ -17,6 +18,7 @@ export default function StaticMap(props) {
     const styles = getStyles(theme);
     const {token, userLocation, selectedPlace} = useSelector(state => state);
     const dispatch = useDispatch();
+    const {navigate} = useNavigation();
 
     const { mapRef, onSelect, movingAnimation, setPins, setModal, modal} = props;
 
@@ -56,33 +58,6 @@ export default function StaticMap(props) {
         setPins([]);
         setModal(false);
     }, []);
-    const onSelectFavoriteLocation = React.useCallback(() => {
-        AsyncStorage.getItem('@favorites')
-            .then(favorites => {
-                const data = favorites ? JSON.parse(favorites) : [];
-                if (selectedPlace.isFavorite) {
-                    AsyncStorage.setItem(
-                        '@favorites',
-                        JSON.stringify(data.filter(item => item.placeId !== selectedPlace.placeId))
-                    ).then(() => {
-                        dispatch(setAction('place', { isFavorite: !selectedPlace.isFavorite }));
-                    });
-                }
-                else {
-                    AsyncStorage.setItem(
-                        '@favorites',
-                        JSON.stringify(
-                            [
-                                ...data,
-                                { placeId: selectedPlace.placeId, address: selectedPlace.address }
-                            ]
-                        )
-                    ).then(() => {
-                        dispatch(setAction('place', { isFavorite: !selectedPlace.isFavorite }));
-                    });
-                }
-            });
-    }, [selectedPlace]);
 
     React.useEffect(() => {
         if (followUserMode) onMoveToCurrentLocation();
@@ -136,7 +111,7 @@ export default function StaticMap(props) {
 
     React.useEffect(() => {
         if (voiceInputOn) {
-            Voice.start('ru-RU');
+            Voice.start('en-EN');
 
 
             let fadeInAndOut = Animated.sequence([
@@ -168,9 +143,65 @@ export default function StaticMap(props) {
         }
     }, [voiceInputOn]);
 
-    const onVoiceInputEnd = React.useCallback((text) => {
-        console.log(text);
-    }, []);
+    const onVoiceInputEnd = React.useCallback((data) => {
+        if (data.value) {
+            let str = data.value[0];
+            str = str.split("from ")[1];
+            const places = str.split(" to ");
+
+            searchPlace(places[0], token, userLocation)
+                .then(startId => {
+                    if (startId.status === 200) {
+                        getPlaceDetail(startId.data.predictions[0].place_id)
+                            .then((startData) => {
+                                if (startData.status === 200) {
+                                    const {geometry, formatted_address, name} = startData.data.result;
+                                    dispatch(
+                                        setAction(
+                                            'startLocation',
+                                            {
+                                                name,
+                                                location: geometry.location,
+                                                address: formatted_address,
+                                            }
+                                        )
+                                    );
+
+                                    searchPlace(places[1], token, userLocation)
+                                        .then(endId => {
+                                            if (endId.status === 200) {
+                                                getPlaceDetail(endId.data.predictions[0].place_id)
+                                                    .then((endData) => {
+                                                        if (endData.status === 200) {
+                                                            const {geometry, formatted_address, name} = endData.data.result;
+                                                            dispatch(
+                                                                setAction(
+                                                                    'endLocation',
+                                                                    {
+                                                                        name,
+                                                                        location: geometry.location,
+                                                                        address: formatted_address,
+                                                                    }
+                                                                )
+                                                            );
+
+                                                            console.log('here')
+
+                                                            navigate('Form');
+                                                        }
+                                                        else Toast.show('Unable to connect', Toast.SHORT);
+                                                    })
+                                            }
+                                            else Toast.show('Unable to connect', Toast.SHORT);
+                                        });
+                                }
+                                else Toast.show('Unable to connect', Toast.SHORT);
+                            })
+                    }
+                    else Toast.show('Unable to connect', Toast.SHORT);
+                });
+        }
+    }, [userLocation, token]);
 
     React.useEffect(() => {
         Voice.onSpeechStart = () => {};

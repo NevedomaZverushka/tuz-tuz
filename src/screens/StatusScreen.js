@@ -4,6 +4,7 @@ import getTheme from "../global/Style";
 import {ButtonForm, Icon} from "../components";
 import SecureStorage from "react-native-secure-storage";
 import API from "../global/API";
+import {useNavigation} from "@react-navigation/native";
 
 const Choose = (props) => {
     const {theme, styles, agreements} = props;
@@ -27,7 +28,8 @@ const Choose = (props) => {
 };
 
 const Waiting = (props) => {
-    const {theme, styles} = props;
+    const { theme, styles } = props;
+    const { navigate } = useNavigation();
     const [text, setText] = React.useState("");
 
     React.useEffect(() => {
@@ -50,9 +52,8 @@ const Waiting = (props) => {
                 />
             )}
             <ButtonForm
-                text={'Want to play a game?'}
-                onPress={() => {
-                }}
+                text={'Want to play game?'}
+                onPress={() => navigate('Game')}
                 containerStyle={{marginTop: theme.scale(40)}}
             />
         </React.Fragment>
@@ -60,15 +61,15 @@ const Waiting = (props) => {
 };
 
 const Trip = (props) => {
-    const {theme, styles} = props;
-    return (
+    const { theme, styles } = props;
+    const { navigate } = useNavigation();
+    return(
         <React.Fragment>
             <Text style={styles.textStep}>Step 3</Text>
             <Text style={styles.textStatus}>Status: in progress</Text>
             <ButtonForm
-                text={'Want to play game?'}
-                onPress={() => {
-                }}
+                text={'Want to play again?'}
+                onPress={() => navigate('Game')}
                 containerStyle={{marginTop: theme.scale(200)}}
             />
         </React.Fragment>

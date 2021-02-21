@@ -10,6 +10,12 @@ export default function Splash() {
     const {navigate} = useNavigation();
     const dispatch = useDispatch();
 
+    const [loading, setLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        dispatch(setAction('spinner', loading));
+    }, [loading]);
+
     React.useEffect(() => {
         SecureStorage.getItem('token')
             .then(token => {
@@ -19,6 +25,7 @@ export default function Splash() {
                             dispatch(setAction('user', res.data.user));
                             SecureStorage.getItem('isDriver')
                                 .then(isDriver => {
+                                    setLoading(false);
                                     if (isDriver === 'true') {
                                         navigate('OrderList');
                                     } else {
@@ -28,6 +35,7 @@ export default function Splash() {
                         }
                     })
                     .catch(err => {
+                        setLoading(false);
                         if (err && err.response) {
                             if (err.response.status === 400 || err.response.status === 401) {
                                 navigate('Auth');

@@ -6,11 +6,14 @@ import API from '../global/API';
 import SecureStorage from 'react-native-secure-storage';
 import {Text, View} from "react-native";
 import CheckBox from "@react-native-community/checkbox";
+import {setAction} from "../store";
+import {useDispatch} from "react-redux";
 
 export default function SignUp() {
     const {navigate} = useNavigation();
     const theme = getTheme();
     const styles = getStyles(theme);
+    const dispatch = useDispatch();
 
     const [username, setUsername] = React.useState('');
     const [email, setEmail] = React.useState('');
@@ -18,6 +21,7 @@ export default function SignUp() {
     const [toggleCheckBox, setToggleCheckBox] = React.useState(false);
 
     const onSignUp = React.useCallback(() => {
+        dispatch(setAction('spinner', true));
         API.registerUser({
             first_name: '123', last_name: '123', patronymic: '123',
             email, password, role: toggleCheckBox ? 'driver' : 'passenger'
@@ -28,6 +32,7 @@ export default function SignUp() {
                         .then(() => {
                             if (!toggleCheckBox) navigate('Home');
                             else navigate('OrderList');
+                            dispatch(setAction('spinner', false));
                         });
                 }
             });
