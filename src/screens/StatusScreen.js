@@ -59,7 +59,7 @@ const Choose = (props) => {
 };
 
 const Waiting = (props) => {
-    const { theme, styles } = props;
+    const { theme, styles, order } = props;
     const { navigate } = useNavigation();
     const [text, setText] = React.useState("");
 
@@ -78,6 +78,8 @@ const Waiting = (props) => {
                 <ButtonForm
                     text={'Want to open AR?'}
                     onPress={() => {
+                        console.log('ello');
+                        navigate('AR');
                     }}
                     containerStyle={{marginTop: theme.scale(40)}}
                 />
@@ -187,7 +189,7 @@ export default function StatusScreen(props) {
                 <Choose theme={theme} styles={styles} agreements={agreements}/>
             )}
             {statuses.waiting.status && (
-                <Waiting styles={styles} theme={theme}/>
+                <Waiting styles={styles} theme={theme} order={order}/>
             )}
             {statuses.trip.status && (
                 <Trip styles={styles} theme={theme}/>

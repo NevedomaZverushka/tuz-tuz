@@ -94,37 +94,25 @@ export default function Form() {
     }, [startLocation, endLocation, mapRef]);
 
     const onConfirmTrip = React.useCallback(() => {
-        // SecureStorage.getItem('token')
-        //     .then(token => {
-        //         if (user) {
-        //             API.createOrder({
-        //                 from: start.name,
-        //                 to: finish.name,
-        //                 passenger_id: user.id,
-        //                 image: file
-        //             }, token)
-        //                 .then(res => {
-        //                     console.log(res.data);
-        //                     if (res.status === 200) {
-        //navigate('StatusScreen', {order: res.data.order})
-        navigate('StatusScreen', {
-            order: {
-                id: '5d2ab711-58f1-46a0-986f-1b1e10d85472',
-                from: 'МЕБЕЛЬ-ЭКСПО',
-                to: 'БЮРО ПЕРЕКЛАДІВ ЛІГА',
-                passengerId: '0f6d00cd-2ca9-4a6d-b5ed-8f6e36ad3bed',
-                driverId: null,
-                status: 'searching',
-                image: null
-            }
-        })
-        //                 }
-        //             })
-        //             .catch(err => console.log(err));
-        //     } else {
-        //         console.log('no user');
-        //     }
-        // });
+        SecureStorage.getItem('token')
+            .then(token => {
+                if (user) {
+                    API.createOrder({
+                        from: start.name,
+                        to: finish.name,
+                        passenger_id: user.id,
+                        image: file
+                    }, token)
+                        .then(res => {
+                            if (res.status === 200) {
+                                navigate('StatusScreen', {order: res.data.order})
+                            }
+                        })
+                        .catch(err => console.log(err));
+                } else {
+                    console.log('no user');
+                }
+            });
     }, [start, finish, file]);
 
     if (loading) return null;

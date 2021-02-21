@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {Linking, Platform} from 'react-native';
 import {NavigationContainer} from "@react-navigation/native";
 import FavoriteLocations from './screens/FavoriteLocations';
-import ARNavigator from "./screens/ARNavigator";
 import {createStackNavigator} from "@react-navigation/stack";
+
+import {useSelector} from "react-redux";
 
 import Auth from './screens/Auth';
 import Home from './screens/Home';
@@ -13,6 +15,7 @@ import OrderList from "./screens/OrderList";
 import OrderFlow from "./screens/OrderFlow";
 import StatusScreen from "./screens/StatusScreen";
 import Game from "./screens/Game";
+import ARNavigator from "./screens/ARNavigator";
 
 const Stack = createStackNavigator();
 

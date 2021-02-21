@@ -11,6 +11,13 @@ const colors = {
   warning: `#ffa500`,
   black: '#0d0d0d'
 };
+const width = Dimensions.get('window').width;
+const height = Dimensions.get('window').height;
+
+const scale = (value) => {
+  if (height / width >= 2) return (value * width) / 375;
+  else return (value * height) / 812;
+};
 
 const rgba = (hexCode, opacity = 1) => {
   let hex = hexCode.replace('#', '');
@@ -24,14 +31,6 @@ const rgba = (hexCode, opacity = 1) => {
   const b = parseInt(hex.substring(4, 6), 16);
 
   return `rgba(${r},${g},${b},${opacity})`;
-};
-
-const width = Dimensions.get('window').width;
-const height = Dimensions.get('window').height;
-
-const scale = (value) => {
-  if (height / width >= 2) return (value * width) / 375;
-  else return (value * height) / 812;
 };
 
 const textSizes = {

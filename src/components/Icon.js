@@ -1,11 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
 
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const iconsAntDesign = ['lock', 'user', 'export', 'paperclip', 'car', 'camerao'];
@@ -39,8 +39,8 @@ export default function Icon(props) {
   const { name, color, size, style } = props;
   const Icon = selectIcon(name);
   return(
-    <View style={style}>
-      <Icon name={name} color={color} size={size} />
-    </View>
+      <View style={style}>
+        <Icon name={name} color={color} size={size} />
+      </View>
   );
 }

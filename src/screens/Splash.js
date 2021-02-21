@@ -1,4 +1,4 @@
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import * as React from "react";
 import SecureStorage from "react-native-secure-storage";
 import API from "../global/API";
@@ -9,6 +9,7 @@ export default function Splash() {
 
     const {navigate} = useNavigation();
     const dispatch = useDispatch();
+    const status = useSelector(state => state.appReady);
 
     const [loading, setLoading] = React.useState(true);
 

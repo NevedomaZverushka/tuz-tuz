@@ -34,6 +34,7 @@ function AppRoot() {
                 if (locationWatch) {
                     clearInterval(locationWatch);
                 }
+                console.log('set watch');
                 locationWatch = setInterval(() => {
                     Geolocation.getCurrentPosition((info) => {
                             const {longitude, latitude} = info.coords;
@@ -44,7 +45,7 @@ function AppRoot() {
                         {
                             timeout: 10000,
                             maximumAge: 15000,
-                            enableHighAccuracy: false
+                            enableHighAccuracy: true
                         });
                 }, 1000);
             };
