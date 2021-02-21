@@ -8,22 +8,22 @@ import {SafeAreaView} from "react-native-safe-area-context";
 
 let ordersWatch = null;
 
-export default function OrderList() {
+export default function OrderFlow() {
     const theme = getTheme();
     const styles = getStyles(theme);
-    const [orders, setOrders] = React.useState([]);
+    const [isConfirmed, setConfirmed] = React.useState(false);
 
-    const refreshOrders = React.useCallback(() => {
-        SecureStorage.getItem('token')
-            .then(token => {
-                API.getOrders(token)
-                    .then((res) => {
-                        if (res && res.status === 200) {
-                            setOrders(res.data.orders);
-                        }
-                    });
-            });
-    });
+    // const refreshOrders = React.useCallback(() => {
+    //     SecureStorage.getItem('token')
+    //         .then(token => {
+    //             API.getOrders(token)
+    //                 .then((res) => {
+    //                     if (res && res.status === 200) {
+    //                         setOrders(res.data.orders);
+    //                     }
+    //                 });
+    //         });
+    // });
 
     React.useEffect(() => {
         refreshOrders();

@@ -7,6 +7,7 @@ import API from '../global/API';
 import {Text, View} from "react-native";
 import CheckBox from "@react-native-community/checkbox";
 import {useDispatch} from "react-redux";
+import {setAction} from "../store";
 
 export default function Login() {
     const {navigate} = useNavigation();
@@ -24,12 +25,17 @@ export default function Login() {
                 if (res && res.status === 200) {
                     SecureStorage.setItem('token', res.data.token)
                         .then(() => {
+                            dispatch(setAction('user', res.data.user));
                             if (!toggleCheckBox) navigate('Home');
                             else navigate('OrderList');
                         });
                 }
             });
     }, [email, password, toggleCheckBox]);
+
+    React.useEffect(() => {
+        SecureStorage.setItem('isDriver', toggleCheckBox? 'true' : 'false')
+    }, [toggleCheckBox]);
 
     return (
         <>

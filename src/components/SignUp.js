@@ -24,11 +24,18 @@ export default function SignUp() {
         })
             .then((res) => {
                 if (res && res.status === 200) {
-                    if (!toggleCheckBox) navigate('Home');
-                    else navigate('OrderList');
+                    SecureStorage.setItem('token', res.data.token)
+                        .then(() => {
+                            if (!toggleCheckBox) navigate('Home');
+                            else navigate('OrderList');
+                        });
                 }
             });
     }, [username, email, password]);
+
+    React.useEffect(() => {
+        SecureStorage.setItem('isDriver', toggleCheckBox ? 'true' : 'false')
+    }, [toggleCheckBox]);
 
     return (
         <>

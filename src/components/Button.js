@@ -16,8 +16,8 @@ export default function Button(props) {
     <TouchableOpacity
       style={
         [
-          containerStyle,
           styles.buttonView,
+          containerStyle,
           { backgroundColor: buttonColor }
         ]
       }
