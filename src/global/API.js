@@ -1,5 +1,6 @@
-import {API_URL} from "@env"
+import {API_URL} from "@env";
 import axios from 'axios';
+import {Platform} from 'react-native';
 
 const errorHandler = (err) => {
     if(err.response) {
@@ -31,6 +32,11 @@ const API = {
             { headers: {Authorization: `Bearer ${token}`}})
             .then(res => res)
     },
+    getUser: async (userId, token) => {
+        return await axios.get(`${API_URL}/api/users/${userId}`,
+            { headers: {Authorization: `Bearer ${token}`}})
+            .then(res => res)
+    },
     getUsers: async (token) => {
         return await axios.get(`${API_URL}/api/users`,
             { headers: {Authorization: `Bearer ${token}`}})
@@ -42,6 +48,49 @@ const API = {
         return await axios.get(`${API_URL}/api/orders`,
             { headers: {Authorization: `Bearer ${token}`}})
             .then(res => res)
+    },
+
+    getOrder:  async (token) => {
+        return await axios.get(`${API_URL}/api/orders`,
+            { headers: {Authorization: `Bearer ${token}`}})
+            .then(res => res)
+    },
+
+    getAgreements:  async (orderId, token) => {
+        return await axios.get(`${API_URL}/api/orders/${orderId}/agreements`,
+            { headers: {Authorization: `Bearer ${token}`}})
+            .then(res => res)
+    },
+    selectAgreement:  async (agreementId, token) => {
+        return await axios.get(`${API_URL}/api/agreements/${agreementId}/select`,
+            { headers: {Authorization: `Bearer ${token}`}})
+            .then(res => res)
+    },
+
+    createOrder: async (data, token) => {
+        const formData = new FormData();
+        formData.append('from', data.from);
+        formData.append('to', data.to);
+        formData.append('passenger_id', data.passenger_id);
+        if (data.image) {
+            formData.append('image', {
+                uri: Platform.OS === 'android' ? data.image.uri : data.image.uri.replace('file://', ''),
+                name: `image-1`,
+                type: 'image/jpeg',
+            });
+        }
+
+        const client = axios.create({
+            baseURL: API_URL,
+        });
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                //'Content-Type': 'multipart/form-data'
+            }
+        };
+        return await client.post('/api/orders', formData, config)
+            .then(res => res);
     },
 
     // getNote: async (data) => {

@@ -5,17 +5,19 @@ import {Header, MapContainer, Icon} from "../components";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigation} from "@react-navigation/native";
 import {setAction} from "../store";
-import { getPlaceIdByCoordinated, getPlaceDetail } from '../utils/Geolocation';
-import { getDirection } from '../utils/Direction';
+import {getPlaceIdByCoordinated, getPlaceDetail} from '../utils/Geolocation';
+import {getDirection} from '../utils/Direction';
 import Toast from "react-native-simple-toast";
 import {launchCamera} from 'react-native-image-picker';
+import SecureStorage from "react-native-secure-storage";
+import API from "../global/API";
 
 export default function Form() {
     const theme = getTheme();
     const styles = getStyles(theme);
     const {navigate} = useNavigation();
     const dispatch = useDispatch();
-    const {startLocation, endLocation, token, steps} = useSelector(state => state);
+    const {startLocation, endLocation, token, steps, user} = useSelector(state => state);
 
     const [loading, setLoading] = React.useState(true);
 
@@ -33,14 +35,14 @@ export default function Form() {
     }, [loading]);
 
     const onMoveCamera = React.useCallback((coords) => {
-        mapRef && mapRef.fitToCoordinates(coords, { animated: true });
+        mapRef && mapRef.fitToCoordinates(coords, {animated: true});
     }, [mapRef]);
     const onMakePhoto = React.useCallback(() => {
         launchCamera({}, (data) => setFile(data));
     }, []);
 
     React.useEffect(() => {
-        getPlaceIdByCoordinated({ latitude: startLocation.location.lat, longitude: startLocation.location.lng })
+        getPlaceIdByCoordinated({latitude: startLocation.location.lat, longitude: startLocation.location.lng})
             .then((startIdData) => {
                 if (startIdData.status === 200) {
                     getPlaceDetail(startIdData.data.results[0].place_id, token)
@@ -56,22 +58,22 @@ export default function Form() {
                                 getDirection(startLocation.location, endLocation.location)
                                     .then((res) => {
                                         if (res.status === 200) {
-                                            const { data } = res;
-                                            const { routes } = data;
-                                            const { bounds, legs } = routes[0];
-                                            const { steps } = legs[0];
+                                            const {data} = res;
+                                            const {routes} = data;
+                                            const {bounds, legs} = routes[0];
+                                            const {steps} = legs[0];
 
                                             const coords = [
-                                                { latitude: bounds.northeast.lat, longitude: bounds.northeast.lng },
-                                                { latitude: bounds.southwest.lat, longitude: bounds.southwest.lng }
+                                                {latitude: bounds.northeast.lat, longitude: bounds.northeast.lng},
+                                                {latitude: bounds.southwest.lat, longitude: bounds.southwest.lng}
                                             ];
 
                                             const tempPoints = (steps.map((step) => {
-                                                const { start_location, end_location } = step;
-                                                return(
+                                                const {start_location, end_location} = step;
+                                                return (
                                                     [
-                                                        { latitude: start_location.lat, longitude: start_location.lng },
-                                                        { latitude: end_location.lat, longitude: end_location.lng }
+                                                        {latitude: start_location.lat, longitude: start_location.lng},
+                                                        {latitude: end_location.lat, longitude: end_location.lng}
                                                     ]
                                                 )
                                             })).flat();
@@ -80,22 +82,53 @@ export default function Form() {
                                             setPoints(tempPoints);
                                             onMoveCamera(coords);
                                             setPins([
-                                                { color: theme.textPrimary, location: startLocation.location },
-                                                { color: theme.textPrimary, location: endLocation.location }
+                                                {color: theme.textPrimary, location: startLocation.location},
+                                                {color: theme.textPrimary, location: endLocation.location}
                                             ]);
-                                        }
-                                        else Toast.show('Unable to connect', Toast.SHORT);
+                                        } else Toast.show('Unable to connect', Toast.SHORT);
                                     });
-                            }
-                            else Toast.show('Unable to connect', Toast.SHORT);
+                            } else Toast.show('Unable to connect', Toast.SHORT);
                         });
-                }
-                else Toast.show('Unable to connect', Toast.SHORT);
+                } else Toast.show('Unable to connect', Toast.SHORT);
             });
     }, [startLocation, endLocation, mapRef]);
 
+    const onConfirmTrip = React.useCallback(() => {
+        // SecureStorage.getItem('token')
+        //     .then(token => {
+        //         if (user) {
+        //             API.createOrder({
+        //                 from: start.name,
+        //                 to: finish.name,
+        //                 passenger_id: user.id,
+        //                 image: file
+        //             }, token)
+        //                 .then(res => {
+        //                     console.log(res.data);
+        //                     if (res.status === 200) {
+        //navigate('StatusScreen', {order: res.data.order})
+        navigate('StatusScreen', {
+            order: {
+                id: '5d2ab711-58f1-46a0-986f-1b1e10d85472',
+                from: 'МЕБЕЛЬ-ЭКСПО',
+                to: 'БЮРО ПЕРЕКЛАДІВ ЛІГА',
+                passengerId: '0f6d00cd-2ca9-4a6d-b5ed-8f6e36ad3bed',
+                driverId: null,
+                status: 'searching',
+                image: null
+            }
+        })
+        //                 }
+        //             })
+        //             .catch(err => console.log(err));
+        //     } else {
+        //         console.log('no user');
+        //     }
+        // });
+    }, [start, finish, file]);
+
     if (loading) return null;
-    return(
+    return (
         <View style={styles.container}>
             <Header
                 subtext={`Drive to`}
@@ -103,14 +136,14 @@ export default function Form() {
                 leftIcon={"arrow-back"}
                 rightIcon={"check"}
                 onClickLeftIcon={() => navigate('Home')}
-                onClickRightIcon={() => {}}
+                onClickRightIcon={onConfirmTrip}
                 noMoves={true}
             />
             <MapContainer
                 onSetRef={(ref) => setMapRef(ref)}
                 points={points}
                 pins={pins}
-                containerStyle={{ width: '100%', height: theme.scale(210) }}
+                containerStyle={{width: '100%', height: theme.scale(210)}}
             />
             <View style={styles.form}>
                 <Icon
@@ -141,7 +174,7 @@ export default function Form() {
                     </TouchableOpacity>
                 </View>
                 {file && (
-                    <Text style={[styles.filePickerText, { marginTop: theme.scale(5) }]}>{file.name}</Text>
+                    <Text style={[styles.filePickerText, {marginTop: theme.scale(5)}]}>{file.name}</Text>
                 )}
             </View>
         </View>

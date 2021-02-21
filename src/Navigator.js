@@ -19,7 +19,7 @@ export default function Navigator() {
     return (
         <NavigationContainer>
             <Stack.Navigator
-                initialRouteName={'StatusScreen'}
+                initialRouteName={'Splash'}
                 screenOptions={{headerShown: false}}
             >
                 {/*    {!status && <Stack.Screen name="Splash" component={Splash} options={{headerShown: false}}/>}*/}
