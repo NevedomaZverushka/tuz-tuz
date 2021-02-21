@@ -12,6 +12,7 @@ import Form from "./screens/Form";
 import OrderList from "./screens/OrderList";
 import OrderFlow from "./screens/OrderFlow";
 import StatusScreen from "./screens/StatusScreen";
+import Game from "./screens/Game";
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,8 @@ export default function Navigator() {
                 <Stack.Screen component={OrderFlow} name={"OrderFlow"} options={{unmountOnBlur: true}}/>
 
                 <Stack.Screen component={StatusScreen} name={"StatusScreen"} options={{unmountOnBlur: true}}/>
+
+                <Stack.Screen component={Game} name={"Game"} options={{unmountOnBlur: true}} />
 
                 <Stack.Screen component={FavoriteLocations} name="FavoriteLocations"  options={{headerShown: false}}/>
                 <Stack.Screen component={ARNavigator} name="AR"  options={{headerShown: false}}/>

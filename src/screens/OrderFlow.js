@@ -1,10 +1,7 @@
 import React from 'react';
-import {Text, View, ScrollView} from "react-native";
-import API from "../global/API";
-import SecureStorage from "react-native-secure-storage";
+import {Text, View} from "react-native";
 import {Button, Icon} from "../components";
 import getTheme from "../global/Style";
-import {SafeAreaView} from "react-native-safe-area-context";
 import {useNavigation} from "@react-navigation/native";
 
 export default function OrderFlow(props) {
