@@ -5,12 +5,15 @@ import SecureStorage from "react-native-secure-storage";
 import {Button, Header} from "../components";
 import getTheme from "../global/Style";
 import {SafeAreaView} from "react-native-safe-area-context";
+import {useNavigation} from "@react-navigation/native";
 
 let ordersWatch = null;
 
 export default function OrderList() {
     const theme = getTheme();
     const styles = getStyles(theme);
+    const {navigate} = useNavigation();
+
     const [orders, setOrders] = React.useState([]);
 
     const refreshOrders = React.useCallback(() => {
@@ -44,6 +47,7 @@ export default function OrderList() {
                             text={'View'}
                             buttonColor={theme.textPlaceholder}
                             textColor={theme.black}
+                            onPress={() => navigate('OrderFlow', { order })}
                         />
                     </View>
                 })}
