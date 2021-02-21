@@ -18,7 +18,7 @@ const iconsMaterialCommunityIcons = [
 const iconsEntypo = ['plus', 'chevron-left', 'chevron-right'];
 const iconsFeather = ['edit-2', 'copy', 'file', 'download', 'delete', 'arrow-up-left'];
 const iconsMaterialIcons = ['file-download-done', 'arrow-back', 'search', 'close', 'star', 'star-border', 'my-location', 'layers-outline', 'navigation', 'access-time'];
-const iconsFontAwesome5 = ['map-marker-alt'];
+const iconsFontAwesome5 = ['map-marker-alt', 'microphone'];
 
 const selectIcon = (name) => {
   if (iconsAntDesign.includes(name)) return AntDesign;

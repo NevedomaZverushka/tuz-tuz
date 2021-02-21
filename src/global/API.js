@@ -37,6 +37,13 @@ const API = {
             .then(res => res)
             .catch(errorHandler);
     },
+
+    getOrders: async (token) => {
+        return await axios.get(`${API_URL}/api/orders`,
+            { headers: {Authorization: `Bearer ${token}`}})
+            .then(res => res)
+    },
+
     // getNote: async (data) => {
     //     return await axios.post(`http://localhost:3000/notes/get`, data)
     //         .then(res => res)

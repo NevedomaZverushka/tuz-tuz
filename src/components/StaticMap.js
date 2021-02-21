@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import getTheme from "../global/Style";
 import {useDispatch, useSelector} from "react-redux";
 import {Animated, Easing, TouchableOpacity, View} from "react-native";
@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {getPlaceDetail} from "../utils/Geolocation";
 import {Icon, SearchBox} from "./index";
 import Toast from "react-native-simple-toast";
+import Voice from '@react-native-voice/voice';
 
 let movedToCurrent = false;
 
@@ -20,6 +21,12 @@ export default function StaticMap(props) {
     const { mapRef, onSelect, movingAnimation, setPins, setModal} = props;
 
     const [followUserMode, setFollowUserMode] = React.useState(true);
+
+    const [voiceInputOn, setVoiceInput] = React.useState(false);
+    const voiceAnim = React.useRef(new Animated.Value(1)).current;
+    const springValue = React.useRef(new Animated.Value(0)).current;
+
+    const movingAnimation = React.useRef(new Animated.Value(60)).current;
 
     const onMoveToCurrentLocation = React.useCallback((flag = true, callback) => {
         const { lat, lng } = userLocation;
@@ -129,6 +136,50 @@ export default function StaticMap(props) {
         }
     }, [selectedPlace.placeId, token]);
 
+    React.useEffect(() => {
+        if (voiceInputOn) {
+            Voice.start('ru-RU');
+
+
+            let fadeInAndOut = Animated.sequence([
+                Animated.timing(voiceAnim, {
+                    toValue: 1,
+                    duration: 750,
+                }),
+                Animated.timing(voiceAnim, {
+                    toValue: 0,
+                    duration: 750,
+                }),
+            ]);
+
+            Animated.loop(
+                Animated.parallel([
+                    fadeInAndOut,
+                    Animated.timing(springValue, {
+                        toValue: 1,
+                        friction: 3,
+                        tension: 40,
+                        duration: 1500,
+                    }),
+                ]),
+            ).start();
+        }
+        else {
+            Voice.stop();
+            springValue.stopAnimation();
+        }
+    }, [voiceInputOn]);
+
+    const onVoiceInputEnd = React.useCallback((text) => {
+        console.log(text);
+    }, []);
+
+    React.useEffect(() => {
+        Voice.onSpeechStart = () => {};
+        Voice.onSpeechEnd = () => {};
+        Voice.onSpeechResults = onVoiceInputEnd;
+    });
+
     return(
         <React.Fragment>
             <SearchBox locked={!followUserMode} onClearLocation={onUnlocked} />
@@ -146,6 +197,17 @@ export default function StaticMap(props) {
                         <View style={{ height: theme.scale(15) }} />
                     </React.Fragment>
                 )}
+                <Animated.View style={{ opacity: voiceAnim }}>
+                    <TouchableOpacity onPress={() => setVoiceInput(!voiceInputOn)}>
+                        <Icon
+                            name={'microphone'}
+                            color={theme.textSecondary}
+                            size={theme.scale(25)}
+                            style={styles.roundBtn}
+                        />
+                    </TouchableOpacity>
+                </Animated.View>
+                <View style={{ height: theme.scale(15) }} />
                 <TouchableOpacity onPress={() => onMoveToCurrentLocation(false)}>
                     <Icon
                         name={'my-location'}
@@ -154,6 +216,20 @@ export default function StaticMap(props) {
                         style={styles.roundBtn}
                     />
                 </TouchableOpacity>
+
+                {(selectedPlace.isFullData && !modal) && (
+                    <React.Fragment>
+                        <View style={{ height: theme.scale(15) }} />
+                        <TouchableOpacity onPress={() => setModal(true)}>
+                            <Icon
+                                name={'layers-outline'}
+                                color={theme.textSecondary}
+                                size={theme.scale(25)}
+                                style={styles.roundBtn}
+                            />
+                        </TouchableOpacity>
+                    </React.Fragment>
+                )}
             </Animated.View>
         </React.Fragment>
     )

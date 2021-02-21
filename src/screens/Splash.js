@@ -17,7 +17,14 @@ export default function Splash() {
                     .then(res => {
                         if (res && res.status === 200) {
                             dispatch(setAction('user', res.data.user));
-                            navigate('Home')
+                            SecureStorage.getItem('isDriver')
+                                .then(isDriver => {
+                                    if (isDriver === 'true') {
+                                        navigate('OrderList');
+                                    } else {
+                                        navigate('Home');
+                                    }
+                                });
                         }
                     })
                     .catch(err => {

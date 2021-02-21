@@ -946,6 +946,11 @@
   dependencies:
     deep-assign "^3.0.0"
 
+"@react-native-community/checkbox@^0.5.7":
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/@react-native-community/checkbox/-/checkbox-0.5.7.tgz#ac818de88736acc1a4539188f2d435cf5e845ae1"
+  integrity sha512-CiHBAMWy5fsFIHLd1pf8frlWrLT8DnCXUSxdlGKazHm7srQSReKH4R5absShjmYOHRo9raWEnKZO/cm7MUDHZg==
+
 "@react-native-community/cli@^1.2.1":
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli/-/cli-1.12.0.tgz#f4cbc2204af63a87d5736d2fa6a018c1fd5efd44"
@@ -995,6 +1000,13 @@
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.10.tgz#5dda643e19e587793bc2034dd9bf7398ad43d401"
   integrity sha512-rk4sWFsmtOw8oyx8SD3KSvawwaK7gRBSEIy2TAwURyGt+3TizssXP1r8nx3zY+R7v2vYYHXZ+k2/GULAT/bcaQ==
+
+"@react-native-voice/voice@^2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@react-native-voice/voice/-/voice-2.0.4.tgz#8d5ca1b3294a93e4d4635b688fd6d698e6697799"
+  integrity sha512-MAkCzn+kT7B4Az66Dxcp1yj0dnJxR8pjG3QNfb6nF/EE6YAFG9XCZx5Z4h3Y/aZtq+gJKT60kGfzpkr2Zrv7kw==
+  dependencies:
+    invariant "^2.2.4"
 
 "@react-navigation/core@^5.15.0":
   version "5.15.0"

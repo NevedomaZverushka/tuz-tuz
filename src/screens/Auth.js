@@ -18,7 +18,7 @@ export default function Auth() {
           <Icon size={theme.scale(55)} name={'car'} color={theme.textPlaceholder} />
         </View>
         <Text style={styles.appName}>Tuz-Tuz</Text>
-        {isLogin ? <Login /> : <SignUp onSignedUp={() => setIsLogin(true)}/>}
+        {isLogin ? <Login /> : <SignUp />}
         <TouchableOpacity onPress={() => setIsLogin(prev => !prev)}>
           <Text style={styles.buttonText}>
             {`or ${isLogin ? 'Sign up' : 'Log in'}`}
