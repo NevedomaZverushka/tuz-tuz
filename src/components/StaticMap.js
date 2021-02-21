@@ -18,7 +18,7 @@ export default function StaticMap(props) {
     const {token, userLocation, selectedPlace} = useSelector(state => state);
     const dispatch = useDispatch();
 
-    const { mapRef, onSelect, movingAnimation, setPins, setModal} = props;
+    const { mapRef, onSelect, movingAnimation, setPins, setModal, modal} = props;
 
     const [followUserMode, setFollowUserMode] = React.useState(true);
 

@@ -174,11 +174,14 @@ function getStyles(theme) {
             ...theme.rowAlignedBetween,
             marginTop: theme.scale(10)
         },
-        filePickerText: theme.textStyle({
-            font: 'NunitoBold',
-            color: 'grey',
-            size: 14,
-            align: 'left'
-        }),
+        filePickerText: {
+            ...theme.textStyle({
+                font: 'NunitoBold',
+                color: 'grey',
+                size: 14,
+                align: 'left',
+            }),
+            marginRight: theme.scale(5),
+        },
     }
 }
