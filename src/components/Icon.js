@@ -18,7 +18,8 @@ const iconsMaterialCommunityIcons = [
     'source-commit-start',
     'source-commit',
     'form-select',
-    'road-variant'
+    'road-variant',
+    'clock-time-five-outline'
 ];
 const iconsEntypo = ['plus', 'chevron-left', 'chevron-right'];
 const iconsFeather = ['edit-2', 'copy', 'file', 'download', 'delete', 'arrow-up-left', 'check'];
